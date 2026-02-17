@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Documentation/" />
   <Folder Name="/Documentation/Assignment1/">
-    <File Path="Documentation\Assignment1\GroupMembers.md" />
+    <File Path="Documentation/Assignment1/GroupMembers.md" />
+    <File Path="Documentation/Assignment1/VEA Abstract Domain Model.svg" />
   </Folder>
 </Solution>
