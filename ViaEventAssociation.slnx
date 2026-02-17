@@ -4,4 +4,7 @@
     <File Path="Documentation/Assignment1/GroupMembers.md" />
     <File Path="Documentation/Assignment1/VEA Abstract Domain Model.svg" />
   </Folder>
+  <Folder Name="/Documentation/Assignment2/">
+    <File Path="Documentation/Assignment2/VEA Concrete Domain Model.svg" />
+  </Folder>
 </Solution>
