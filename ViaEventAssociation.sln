@@ -13,15 +13,30 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assignment2", "Assignment2"
 		Documentation/Assignment2/VEA Concrete Domain Model.svg = Documentation/Assignment2/VEA Concrete Domain Model.svg
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{252E4D09-8022-4F65-9B36-BF90F99CF8DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F0D619A7-B14D-4903-8072-AA93C20DF7B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{D71D5032-B526-4C2C-BDAA-1E23634AA901}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViaEventAssociation.Core.Tools.OperationResult", "src\Core\Tools\ViaEventAssociation.Core.Tools.OperationResult\ViaEventAssociation.Core.Tools.OperationResult.csproj", "{4710C632-D21B-4E4B-AB30-8BC70DB23B67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4710C632-D21B-4E4B-AB30-8BC70DB23B67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4710C632-D21B-4E4B-AB30-8BC70DB23B67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4710C632-D21B-4E4B-AB30-8BC70DB23B67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4710C632-D21B-4E4B-AB30-8BC70DB23B67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8FD3AEA7-35C3-E723-D679-C9A7FBF16056} = {5CE8E52D-A8AF-340A-4033-B85429601BE7}
 		{7644C600-B02A-3D9F-C4A1-C2D82C17A7A5} = {5CE8E52D-A8AF-340A-4033-B85429601BE7}
+		{F0D619A7-B14D-4903-8072-AA93C20DF7B3} = {252E4D09-8022-4F65-9B36-BF90F99CF8DF}
+		{D71D5032-B526-4C2C-BDAA-1E23634AA901} = {F0D619A7-B14D-4903-8072-AA93C20DF7B3}
+		{4710C632-D21B-4E4B-AB30-8BC70DB23B67} = {D71D5032-B526-4C2C-BDAA-1E23634AA901}
 	EndGlobalSection
 EndGlobal
