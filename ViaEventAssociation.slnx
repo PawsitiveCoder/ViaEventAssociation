@@ -7,4 +7,7 @@
   <Folder Name="/Documentation/Assignment2/">
     <File Path="Documentation/Assignment2/VEA Concrete Domain Model.svg" />
   </Folder>
+  <Folder Name="/Documentation/Assignment4/">
+    <File Path="Documentation/Assignment4/Status.md" />
+  </Folder>
 </Solution>
