@@ -92,7 +92,7 @@
     * [ ] F5
     * [ ] F6
     * [ ] F7
-* [ ] UC11 - Guest participates public event 
+* [ ] UC11 - Guest participates public event
     * [ ] S1
     * [ ] S2
     * [ ] F1
@@ -100,7 +100,7 @@
     * [ ] F3
     * [ ] F4
     * [ ] F5
-* [ ] UC12 - Guest cancels event participation 
+* [ ] UC12 - Guest cancels event participation
     * [ ] S1
     * [ ] S2
     * [ ] F1
