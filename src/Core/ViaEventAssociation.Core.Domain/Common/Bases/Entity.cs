@@ -1,15 +1,15 @@
 namespace ViaEventAssociation.Core.Domain.Common.Bases;
 
-public abstract class Entity
+public abstract class Entity<T>
 {
-    public Guid Id { get; }
+    public T Id { get; }
 
-    protected Entity(Guid id)
+    protected Entity(T id)
     {
         Id = id;
     }
 
-    protected Entity() {}
+    protected Entity() { }
 
     public override bool Equals(object? obj)
     {
@@ -18,7 +18,7 @@ public abstract class Entity
             return false;
         }
 
-        Entity entity = (Entity)obj;
+        Entity<T> entity = (Entity<T>)obj;
         return entity.Id.Equals(Id);
     }
 

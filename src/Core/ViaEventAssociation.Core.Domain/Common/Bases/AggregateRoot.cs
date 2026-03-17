@@ -1,11 +1,11 @@
 namespace ViaEventAssociation.Core.Domain.Common.Bases;
 
-public abstract class AggregateRoot : Entity
+public abstract class AggregateRoot<T> : Entity<T>
 {
-    protected AggregateRoot(Guid id) : base(id)
+    protected AggregateRoot(T id) : base(id)
     {
     }
-    
+
     protected AggregateRoot() { }
 
 }
