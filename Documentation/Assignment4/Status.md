@@ -1,8 +1,8 @@
 # Completed Feature Status
 
-* [ ] ValueObject base
-* [ ] Entity base
-* [ ] Aggregate base
+* [x] ValueObject base
+* [x] Entity base
+* [x] Aggregate base
 * [ ] UC1 - Create event
     * [ ] value - EventId
     * [ ] S1
