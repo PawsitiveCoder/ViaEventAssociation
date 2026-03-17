@@ -5,7 +5,7 @@ public class Error
     public string Code { get; }
     public string Description { get; }
     public ErrorType ErrorType { get; }
-    
+
     private Error(
         string code,
         string description,
@@ -22,7 +22,7 @@ public class Error
 
     public static Error NotFound(string code, string description) =>
         new(code, description, ErrorType.NotFound);
-    
+
     public static Error Validation(string code, string description) =>
         new(code, description, ErrorType.Validation);
 

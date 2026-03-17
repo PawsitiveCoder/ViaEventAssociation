@@ -7,4 +7,17 @@
   <Folder Name="/Documentation/Assignment2/">
     <File Path="Documentation/Assignment2/VEA Concrete Domain Model.svg" />
   </Folder>
+  <Folder Name="/Documentation/Assignment4/">
+    <File Path="Documentation/Assignment4/Status.md" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Core/">
+    <Project Path="src/Core/ViaEventAssociation.Core.Domain/ViaEventAssociation.Core.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/Core/Tools/">
+    <Project Path="src/Core/Tools/ViaEventAssociation.Core.Tools.OperationResult/ViaEventAssociation.Core.Tools.OperationResult.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/UnitTests/UnitTests.csproj" />
+  </Folder>
 </Solution>

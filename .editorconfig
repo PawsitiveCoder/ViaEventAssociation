@@ -1,0 +1,23 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+
+[*.cs]
+csharp_style_expression_bodied_accessors = when_on_single_line:warning
+csharp_style_expression_bodied_constructors = when_on_single_line:warning
+csharp_style_expression_bodied_indexers = when_on_single_line:warning
+csharp_style_expression_bodied_methods = when_on_single_line:warning
+csharp_style_expression_bodied_operators = when_on_single_line:warning
+csharp_style_expression_bodied_properties = when_on_single_line:warning
+
+dotnet_naming_rule.private_fields_must_be_underscore_camel.severity = warning
+dotnet_naming_rule.private_fields_must_be_underscore_camel.symbols = private_fields
+dotnet_naming_rule.private_fields_must_be_underscore_camel.style = underscore_camel_style
+
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+
+dotnet_naming_style.underscore_camel_style.required_prefix = _
+dotnet_naming_style.underscore_camel_style.capitalization = camel_case

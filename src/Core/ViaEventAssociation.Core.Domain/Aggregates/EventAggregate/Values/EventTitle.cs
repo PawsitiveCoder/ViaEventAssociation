@@ -1,0 +1,34 @@
+using ViaEventAssociation.Core.Domain.Common.Bases;
+using ViaEventAssociation.Core.Tools.OperationResult;
+
+namespace ViaEventAssociation.Core.Domain.Aggregates.EventAggregate.Values;
+
+public class EventTitle : ValueObject
+{
+    public const int MinLength = 3;
+    public const int MaxLength = 75;
+
+    private readonly string _value;
+
+    private EventTitle(string value) => _value = value;
+
+    public static Result<EventTitle> Create(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return Error.Validation("EventTitle.Validation", "Event title cannot be null or whitespace.");
+        }
+
+        if (value.Length < MinLength || value.Length > MaxLength)
+        {
+            return Error.Validation("EventTitle.Validation", $"Event title must be between {MinLength} and {MaxLength} characters.");
+        }
+
+        return new EventTitle(value);
+    }
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return _value;
+    }
+}
