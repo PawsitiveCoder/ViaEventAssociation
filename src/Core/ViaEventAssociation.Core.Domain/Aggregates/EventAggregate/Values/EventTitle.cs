@@ -12,14 +12,9 @@ public class EventTitle : ValueObject
 
     private EventTitle(string value) => _value = value;
 
-    public static Result<EventTitle> Create(string value)
+    public static Result<EventTitle> Create(string? value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return Error.Validation("EventTitle.Validation", "Event title cannot be null or whitespace.");
-        }
-
-        if (value.Length < MinLength || value.Length > MaxLength)
+        if (string.IsNullOrWhiteSpace(value) || value.Length < MinLength || value.Length > MaxLength)
         {
             return Error.Validation("EventTitle.Validation", $"Event title must be between {MinLength} and {MaxLength} characters.");
         }

@@ -11,6 +11,14 @@ public class EventId : ValueObject
 
     public static Result<EventId> Create() => new EventId(Guid.NewGuid());
 
+    public static Result<EventId> FromString(string value)
+    {
+        if (!Guid.TryParse(value, out var guid))
+            return Error.Validation("EventId.Validation", "EventId must be a valid GUID string.");
+
+        return new EventId(guid);
+    }
+
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return _value;
