@@ -5,6 +5,7 @@ namespace ViaEventAssociation.Core.Domain.Aggregates.EventAggregate.Values;
 
 public class EventTitle : ValueObject
 {
+    public static string DefaultValue { get; } = "Working Title";
     public const int MinLength = 3;
     public const int MaxLength = 75;
 
@@ -12,7 +13,9 @@ public class EventTitle : ValueObject
 
     private EventTitle(string value) => _value = value;
 
-    public static Result<EventTitle> Create(string? value)
+    public static Result<EventTitle> Create() => Create(DefaultValue);
+
+    public static Result<EventTitle> Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value) || value.Length < MinLength || value.Length > MaxLength)
         {

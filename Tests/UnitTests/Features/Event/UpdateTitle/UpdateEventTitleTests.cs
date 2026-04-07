@@ -16,11 +16,12 @@ public class UpdateEventTitleTests
     public void UpdateTitle_DraftEvent_ValidTitle_TitleUpdated(string title)
     {
         var eventAggregate = EventAggregate.Create().Value;
+        var eventTitle = EventTitle.Create(title).Value;
 
-        var result = eventAggregate.UpdateTitle(title);
+        var result = eventAggregate.UpdateTitle(eventTitle);
 
         Assert.True(result.IsSuccess);
-        Assert.Equal(EventTitle.Create(title).Value, eventAggregate.Title);
+        Assert.Equal(eventTitle, eventAggregate.Title);
         Assert.Equal(EventStatus.Draft, eventAggregate.Status);
     }
 
@@ -32,11 +33,12 @@ public class UpdateEventTitleTests
     public void UpdateTitle_ReadyEvent_ValidTitle_TitleUpdatedAndStatusSetToDraft(string title)
     {
         var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Ready);
+        var eventTitle = EventTitle.Create(title).Value;
 
-        var result = eventAggregate.UpdateTitle(title);
+        var result = eventAggregate.UpdateTitle(eventTitle);
 
         Assert.True(result.IsSuccess);
-        Assert.Equal(EventTitle.Create(title).Value, eventAggregate.Title);
+        Assert.Equal(eventTitle, eventAggregate.Title);
         Assert.Equal(EventStatus.Draft, eventAggregate.Status);
     }
 
@@ -45,8 +47,9 @@ public class UpdateEventTitleTests
     public void UpdateTitle_EmptyTitle_Failure()
     {
         var eventAggregate = EventAggregate.Create().Value;
+        var emptyTitle = EventTitle.Create("").Value;
 
-        var result = eventAggregate.UpdateTitle("");
+        var result = eventAggregate.UpdateTitle(emptyTitle);
 
         Assert.True(result.HasErrors);
         Assert.Contains("3 and 75", result.Error!.Description);
@@ -59,8 +62,9 @@ public class UpdateEventTitleTests
     public void UpdateTitle_TooShortTitle_Failure(string title)
     {
         var eventAggregate = EventAggregate.Create().Value;
+        var eventTitle = EventTitle.Create(title).Value;
 
-        var result = eventAggregate.UpdateTitle(title);
+        var result = eventAggregate.UpdateTitle(eventTitle);
 
         Assert.True(result.HasErrors);
         Assert.Contains("3 and 75", result.Error!.Description);
@@ -72,8 +76,9 @@ public class UpdateEventTitleTests
     {
         var eventAggregate = EventAggregate.Create().Value;
         var longTitle = new string('A', 76);
+        var eventTitle = EventTitle.Create(longTitle).Value;
 
-        var result = eventAggregate.UpdateTitle(longTitle);
+        var result = eventAggregate.UpdateTitle(eventTitle);
 
         Assert.True(result.HasErrors);
         Assert.Contains("3 and 75", result.Error!.Description);
@@ -84,8 +89,10 @@ public class UpdateEventTitleTests
     public void UpdateTitle_NullTitle_Failure()
     {
         var eventAggregate = EventAggregate.Create().Value;
+        // TODO: ask about this scenario
+        var eventTitle = EventTitle.Create(null).Value;
 
-        var result = eventAggregate.UpdateTitle(null);
+        var result = eventAggregate.UpdateTitle(eventTitle);
 
         Assert.True(result.HasErrors);
         Assert.Contains("3 and 75", result.Error!.Description);
@@ -96,10 +103,12 @@ public class UpdateEventTitleTests
     public void UpdateTitle_ActiveEvent_Failure()
     {
         var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Active);
+        var eventTitle = EventTitle.Create("Valid Title").Value;
 
-        var result = eventAggregate.UpdateTitle("Valid Title");
+        var result = eventAggregate.UpdateTitle(eventTitle);
 
         Assert.True(result.HasErrors);
+        Assert.Equal(EventStatus.Active, eventAggregate.Status);
         Assert.Contains("active", result.Error!.Description, StringComparison.OrdinalIgnoreCase);
     }
 
@@ -108,10 +117,12 @@ public class UpdateEventTitleTests
     public void UpdateTitle_CancelledEvent_Failure()
     {
         var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Cancelled);
+        var eventTitle = EventTitle.Create("Valid Title").Value;
 
-        var result = eventAggregate.UpdateTitle("Valid Title");
+        var result = eventAggregate.UpdateTitle(eventTitle);
 
         Assert.True(result.HasErrors);
+        Assert.Equal(EventStatus.Cancelled, eventAggregate.Status);
         Assert.Contains("cancelled", result.Error!.Description, StringComparison.OrdinalIgnoreCase);
     }
 }
