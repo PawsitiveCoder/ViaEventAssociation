@@ -13,10 +13,7 @@ public class MaxNumberOfGuests : ValueObject
 
     public static Result<MaxNumberOfGuests> Create() => Create(DefaultValue);
 
-    public static Result<MaxNumberOfGuests> Create(int value)
-    {
-        return new MaxNumberOfGuests(value);
-    }
+    public static Result<MaxNumberOfGuests> Create(int value) => new MaxNumberOfGuests(value);
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

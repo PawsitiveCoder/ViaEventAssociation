@@ -11,6 +11,8 @@ public class EventId : ValueObject
 
     public static Result<EventId> Create() => new EventId(Guid.NewGuid());
 
+    public static Result<EventId> FromGuid(Guid value) => new EventId(value);
+
     protected override IEnumerable<object> GetEqualityComponents()
     {
         yield return _value;
