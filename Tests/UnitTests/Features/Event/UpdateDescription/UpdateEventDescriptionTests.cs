@@ -17,7 +17,7 @@ public class UpdateEventDescriptionTests
     [Fact]
     public void UpdateDescription_DraftEvent_ValidDescription_DescriptionUpdated()
     {
-        var eventAggregate = EventAggregate.Create().Value;
+        var eventAggregate = FakeEventAggregateFactory.Create();
         var eventDescription = EventDescription.Create(_validDescription).Value;
 
         var result = eventAggregate.UpdateDescription(eventDescription);
@@ -32,7 +32,7 @@ public class UpdateEventDescriptionTests
     [InlineData("")]
     public void UpdateDescription_EmptyDescription_DescriptionSetToEmpty(string description)
     {
-        var eventAggregate = EventAggregate.Create().Value;
+        var eventAggregate = FakeEventAggregateFactory.Create();
         var eventDescription = EventDescription.Create(description).Value;
 
         var result = eventAggregate.UpdateDescription(eventDescription);
@@ -45,7 +45,7 @@ public class UpdateEventDescriptionTests
     [Fact]
     public void UpdateDescription_ReadyEvent_ValidDescription_DescriptionUpdatedAndStatusSetToDraft()
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Ready);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Ready);
         var eventDescription = EventDescription.Create(_validDescription).Value;
 
         var result = eventAggregate.UpdateDescription(eventDescription);
@@ -59,21 +59,21 @@ public class UpdateEventDescriptionTests
     [Fact]
     public void UpdateDescription_TooLongDescription_Failure()
     {
-        var eventAggregate = EventAggregate.Create().Value;
+        var eventAggregate = FakeEventAggregateFactory.Create();
         var tooLong = new string('A', 251);
-        var eventDescription = EventDescription.Create(tooLong).Value;
+        var eventDescription = EventDescription.Create(tooLong);
 
-        var result = eventAggregate.UpdateDescription(eventDescription);
+        var result = eventAggregate.UpdateDescription(eventDescription.Value);
 
-        Assert.True(result.HasErrors);
-        Assert.Contains("250", result.Error!.Description);
+        Assert.NotNull(eventDescription.Error);
+        Assert.Contains("250", eventDescription.Error.Description);
     }
 
     // F2
     [Fact]
     public void UpdateDescription_CancelledEvent_Failure()
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Cancelled);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Cancelled);
         var eventDescription = EventDescription.Create(_validDescription).Value;
 
         var result = eventAggregate.UpdateDescription(eventDescription);
@@ -87,7 +87,7 @@ public class UpdateEventDescriptionTests
     [Fact]
     public void UpdateDescription_ActiveEvent_Failure()
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Active);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Active);
         var eventDescription = EventDescription.Create(_validDescription).Value;
 
         var result = eventAggregate.UpdateDescription(eventDescription);

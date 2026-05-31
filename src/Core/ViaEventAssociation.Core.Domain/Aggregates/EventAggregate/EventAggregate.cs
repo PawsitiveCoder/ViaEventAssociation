@@ -10,6 +10,8 @@ public class EventAggregate : AggregateRoot<EventId>
     public MaxNumberOfGuests MaxNumberOfGuests { get; private set; }
     public EventTitle Title { get; private set; }
     public EventDescription Description { get; private set; }
+    public TimeInterval? TimeInterval { get; private set; }
+    public EventVisibility Visibility { get; private set; }
 
     private EventAggregate(EventId id) : base(id)
     {
@@ -17,6 +19,7 @@ public class EventAggregate : AggregateRoot<EventId>
         MaxNumberOfGuests = MaxNumberOfGuests.Create().Value;
         Title = EventTitle.Create().Value;
         Description = EventDescription.Create().Value;
+        Visibility = EventVisibility.Private;
     }
 
     public static Result<EventAggregate> Create() => new EventAggregate(EventId.Create().Value);
@@ -49,6 +52,45 @@ public class EventAggregate : AggregateRoot<EventId>
             Status = EventStatus.Draft;
 
         Description = description;
+
+        return Result.Success();
+    }
+
+    public Result UpdateTimeInterval(DateTime startDateTime, DateTime endDateTime, DateTime currentTime)
+    {
+        if (Status == EventStatus.Active)
+        {
+            return Result.Failure(Error.Validation("EventAggregate.Status",
+                "Times cannot be modified while the event is active."));
+        }
+
+        if (Status == EventStatus.Cancelled)
+        {
+            return Result.Failure(Error.Validation("EventAggregate.Status",
+                "Times cannot be modified when the event is cancelled."));
+        }
+
+        var timeIntervalResult = TimeInterval.Create(startDateTime, endDateTime, currentTime);
+        if (timeIntervalResult.HasErrors) return Result.Failure(timeIntervalResult.Error!);
+
+        TimeInterval = timeIntervalResult.Value;
+
+        if (Status == EventStatus.Ready)
+        {
+            Status = EventStatus.Draft;
+        }
+
+        return Result.Success();
+    }
+
+    public Result MarkAsPublic()
+    {
+        if (Status == EventStatus.Cancelled)
+        {
+            return Result.Failure(Error.Validation("EventAggregate.Status", "A cancelled event cannot be modified."));
+        }
+
+        Visibility = EventVisibility.Public;
 
         return Result.Success();
     }
