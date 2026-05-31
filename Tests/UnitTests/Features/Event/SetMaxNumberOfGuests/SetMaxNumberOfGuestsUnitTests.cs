@@ -39,9 +39,9 @@ public class SetMaxNumberOfGuestsUnitTests
 
     // S3
     [Theory]
-    [InlineData(5, 5)]
-    [InlineData(15, 16)]
-    [InlineData(50, 50)]
+    [InlineData(MaxNumberOfGuests.MinValue, MaxNumberOfGuests.MinValue)]
+    [InlineData(MaxNumberOfGuests.MinValue + 1, MaxNumberOfGuests.MinValue + 2)]
+    [InlineData(MaxNumberOfGuests.MaxValue, MaxNumberOfGuests.MaxValue)]
     public void SetMaxNumberOfGuests_ActiveEvent_IncreaseAllowed(int currentValue, int newValue)
     {
         var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Active);
@@ -103,6 +103,6 @@ public class SetMaxNumberOfGuestsUnitTests
         Assert.NotNull(invalidMaxNumberOfGuests.Error);
         Assert.Equal(MaxNumberOfGuests.MinValue, eventAggregate.MaxNumberOfGuests.Value);
         Assert.Equal(EventStatus.Draft, eventAggregate.Status);
-        Assert.Contains("between 5 and 50", invalidMaxNumberOfGuests.Error.Description, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains($"between {MaxNumberOfGuests.MinValue} and {MaxNumberOfGuests.MaxValue}", invalidMaxNumberOfGuests.Error.Description, StringComparison.OrdinalIgnoreCase);
     }
 }

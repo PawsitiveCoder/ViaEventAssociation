@@ -49,22 +49,22 @@
     * [ ] value - EventVisibility
     * [ ] S1
     * [ ] F1
-* [ ] UC6 - The creator makes the event private
-    * [ ] value - EventVisibility
-    * [ ] S1
-    * [ ] S2
-    * [ ] F1
-    * [ ] F2
-* [ ] UC7 - The creator sets maximum number of guests
-    * [ ] value - MaximumGuests
-    * [ ] S1
-    * [ ] S2
-    * [ ] S3
-    * [ ] F1
-    * [ ] F2
-    * [ ] F3
-    * [ ] F4
-    * [ ] F5
+* [x] UC6 - The creator makes the event private
+    * [x] value - EventVisibility
+    * [x] S1
+    * [x] S2
+    * [x] F1
+    * [x] F2
+* [x] UC7 - The creator sets maximum number of guests
+    * [x] value - MaxNumberOfGuests
+    * [x] S1
+    * [x] S2
+    * [x] S3
+    * [x] F1
+    * [x] F2
+    * [ ] F3 - Skipped, part of UC16-20
+    * [x] F4
+    * [x] F5
 * [ ] UC8 - The creator readies an event
     * [ ] value - EventStatus
     * [ ] S1
