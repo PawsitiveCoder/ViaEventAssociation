@@ -94,4 +94,25 @@ public class EventAggregate : AggregateRoot<EventId>
 
         return Result.Success();
     }
+
+    public Result MarkAsPrivate()
+    {
+        if (Status == EventStatus.Active)
+        {
+            return Result.Failure(Error.Validation("EventAggregate.Status", "An active event cannot be made private."));
+        }
+
+        if (Status == EventStatus.Cancelled)
+        {
+            return Result.Failure(Error.Validation("EventAggregate.Status", "A cancelled event cannot be modified."));
+        }
+
+        if (Visibility == EventVisibility.Public)
+        {
+            Visibility = EventVisibility.Private;
+            Status = EventStatus.Draft;
+        }
+
+        return Result.Success();
+    }
 }
