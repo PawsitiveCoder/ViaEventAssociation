@@ -11,6 +11,7 @@ public class EventAggregate : AggregateRoot<EventId>
     public EventTitle Title { get; private set; }
     public EventDescription Description { get; private set; }
     public TimeInterval? TimeInterval { get; private set; }
+    public EventVisibility Visibility { get; private set; }
 
     private EventAggregate(EventId id) : base(id)
     {
@@ -18,6 +19,7 @@ public class EventAggregate : AggregateRoot<EventId>
         MaxNumberOfGuests = MaxNumberOfGuests.Create().Value;
         Title = EventTitle.Create().Value;
         Description = EventDescription.Create().Value;
+        Visibility = EventVisibility.Private;
     }
 
     public static Result<EventAggregate> Create() => new EventAggregate(EventId.Create().Value);
@@ -81,4 +83,15 @@ public class EventAggregate : AggregateRoot<EventId>
         return Result.Success();
     }
 
+    public Result MarkAsPublic()
+    {
+        if (Status == EventStatus.Cancelled)
+        {
+            return Result.Failure(Error.Validation("EventAggregate.Status", "A cancelled event cannot be modified."));
+        }
+
+        Visibility = EventVisibility.Public;
+
+        return Result.Success();
+    }
 }
