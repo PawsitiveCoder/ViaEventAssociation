@@ -7,6 +7,7 @@ namespace ViaEventAssociation.Core.Domain.Aggregates.EventAggregate.Values;
 public class MaxNumberOfGuests : ValueObject
 {
     public static int DefaultValue { get; } = 5;
+
     public int Value { get; }
 
     private MaxNumberOfGuests(int value) => Value = value;

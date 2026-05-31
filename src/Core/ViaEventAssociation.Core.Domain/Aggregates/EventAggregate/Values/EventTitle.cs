@@ -9,9 +9,9 @@ public class EventTitle : ValueObject
     public const int MinLength = 3;
     public const int MaxLength = 75;
 
-    private readonly string _value;
+    public string Value { get; }
 
-    private EventTitle(string value) => _value = value;
+    private EventTitle(string value) => Value = value;
 
     public static Result<EventTitle> Create() => Create(DefaultValue);
 
@@ -27,6 +27,6 @@ public class EventTitle : ValueObject
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return _value;
+        yield return Value;
     }
 }

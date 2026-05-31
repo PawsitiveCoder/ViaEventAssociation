@@ -8,9 +8,9 @@ public class EventDescription : ValueObject
     public static string DefaultValue { get; } = "";
     public const int MaxLength = 250;
 
-    private readonly string _value;
+    public string Value { get; }
 
-    private EventDescription(string value) => _value = value;
+    private EventDescription(string value) => Value = value;
 
     public static Result<EventDescription> Create() => Create(DefaultValue);
 
@@ -24,6 +24,6 @@ public class EventDescription : ValueObject
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-        yield return _value;
+        yield return Value;
     }
 }
