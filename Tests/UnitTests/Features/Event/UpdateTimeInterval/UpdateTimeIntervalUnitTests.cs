@@ -18,9 +18,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2023-08-25T13:00:00", "2023-08-25T23:00:00")]
     public void UpdateTimeInterval_DraftStatus_SameDayValidTimes_TimeIntervalUpdated(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Draft);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Draft);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.IsSuccess);
         Assert.NotNull(eventAggregate.TimeInterval);
@@ -33,9 +34,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2023-08-25T08:00:00", "2023-08-25T12:15:00")]
     public void UpdateTimeInterval_DraftStatus_ValidTimes_TimeIntervalUpdated(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Draft);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Draft);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.IsSuccess);
         Assert.NotNull(eventAggregate.TimeInterval);
@@ -46,9 +48,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2026-08-25T12:00:00", "2026-08-25T16:30:00")]
     public void UpdateTimeInterval_ReadyStatus_ValidTimes_TimeIntervalUpdatedAndStatusSetToDraft(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Ready);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Ready);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
 
         Assert.True(result.IsSuccess);
@@ -61,9 +64,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2026-08-25T12:00:00", "2026-08-25T16:30:00")]
     public void UpdateTimeInterval_FutureStart_TimeIntervalUpdated(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Draft);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Draft);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.IsSuccess);
     }
@@ -73,9 +77,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2026-08-25T14:00:00", "2026-08-26T00:00:00")]
     public void UpdateTimeInterval_DurationAtMostTenHours_TimeIntervalUpdated(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Draft);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Draft);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.IsSuccess);
     }
@@ -88,9 +93,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2023-08-01T08:00:00", "2023-07-31T12:15:00")]
     public void UpdateTimeInterval_StartDateAfterEndDate_Failure(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Draft);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Draft);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.HasErrors);
     }
@@ -104,9 +110,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2023-08-26T08:00:00", "2023-08-26T00:30:00")]
     public void UpdateTimeInterval_StartTimeAfterEndTime_Failure(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Draft);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Draft);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.HasErrors);
     }
@@ -119,9 +126,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2023-08-26T08:00:00", "2023-08-26T08:00:00")]
     public void UpdateTimeInterval_DurationTooShortSameDay_Failure(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Draft);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Draft);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.HasErrors);
     }
@@ -133,9 +141,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2023-08-30T23:59:00", "2023-08-31T00:01:00")]
     public void UpdateTimeInterval_DurationTooShortAcrossMidnight_Failure(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Draft);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Draft);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.HasErrors);
     }
@@ -149,9 +158,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2023-08-25T00:59:00", "2023-08-25T07:59:00")]
     public void UpdateTimeInterval_StartTimeBeforeEight_Failure(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Draft);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Draft);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.HasErrors);
     }
@@ -163,9 +173,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2023-08-30T23:00:00", "2023-08-31T02:30:00")]
     public void UpdateTimeInterval_OvernightEndAfterOne_Failure(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Draft);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Draft);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.HasErrors);
     }
@@ -175,9 +186,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2026-08-25T12:00:00", "2026-08-25T16:30:00")]
     public void UpdateTimeInterval_ActiveEvent_Failure(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Active);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Active);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.HasErrors);
     }
@@ -187,9 +199,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2026-08-25T12:00:00", "2026-08-25T16:30:00")]
     public void UpdateTimeInterval_CancelledEvent_Failure(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Cancelled);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Cancelled);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.HasErrors);
     }
@@ -202,9 +215,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2023-08-30T14:00:00", "2023-08-31T18:30:00")]
     public void UpdateTimeInterval_DurationTooLong_Failure(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Draft);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Draft);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.HasErrors);
     }
@@ -214,9 +228,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2026-04-25T12:00:00", "2026-08-25T16:30:00")]
     public void UpdateTimeInterval_StartTimeInPast_Failure(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Draft);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Draft);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.HasErrors);
     }
@@ -228,9 +243,10 @@ public class UpdateTimeIntervalUnitTests
     [InlineData("2023-08-31T01:00:00", "2023-08-31T08:00:00")]
     public void UpdateTimeInterval_EventSpansInvalidNightWindow_Failure(string startIso, string endIso)
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Draft);
+        var currentTime = DateTime.Parse(startIso);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Draft);
 
-        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso));
+        var result = eventAggregate.UpdateTimeInterval(DateTime.Parse(startIso), DateTime.Parse(endIso), currentTime);
 
         Assert.True(result.HasErrors);
     }

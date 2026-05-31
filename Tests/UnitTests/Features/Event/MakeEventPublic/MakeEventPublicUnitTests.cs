@@ -22,7 +22,7 @@ public class MakeEventPublicUnitTests
             nameof(EventStatus.Active) => EventStatus.Active,
             _ => throw new ArgumentException("Invalid status")
         };
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(status);
+        var eventAggregate = FakeEventAggregateFactory.Create(status);
 
         var result = eventAggregate.MarkAsPublic();
 
@@ -35,7 +35,7 @@ public class MakeEventPublicUnitTests
     [Fact]
     public void MarkAsPublic_CancelledEvent_Failure()
     {
-        var eventAggregate = FakeEventAggregateFactory.WithStatus(EventStatus.Cancelled);
+        var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Cancelled);
 
         var result = eventAggregate.MarkAsPublic();
 

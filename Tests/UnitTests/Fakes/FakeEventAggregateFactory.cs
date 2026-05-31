@@ -5,7 +5,9 @@ namespace UnitTests.Fakes;
 
 public static class FakeEventAggregateFactory
 {
-    public static EventAggregate WithStatus(EventStatus status)
+    public static EventAggregate Create() => Create(EventStatus.Draft);
+
+    public static EventAggregate Create(EventStatus status)
     {
         var aggregate = EventAggregate.Create().Value;
         typeof(EventAggregate)

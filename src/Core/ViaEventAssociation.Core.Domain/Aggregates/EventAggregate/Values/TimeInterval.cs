@@ -21,10 +21,9 @@ public class TimeInterval : ValueObject
         EndDateTime = endDateTime;
     }
 
-    public static Result<TimeInterval> Create(DateTime startDateTime, DateTime endDateTime)
+    public static Result<TimeInterval> Create(DateTime startDateTime, DateTime endDateTime, DateTime currentTime)
     {
-        // TODO: use exrenal dependendency for current time
-        if (startDateTime < DateTime.UtcNow)
+        if (startDateTime < currentTime)
         {
             return Error.Validation("TimeInterval.Validation", "Event start time must be in the future.");
         }

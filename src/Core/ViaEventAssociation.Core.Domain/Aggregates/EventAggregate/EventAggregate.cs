@@ -56,7 +56,7 @@ public class EventAggregate : AggregateRoot<EventId>
         return Result.Success();
     }
 
-    public Result UpdateTimeInterval(DateTime startDateTime, DateTime endDateTime)
+    public Result UpdateTimeInterval(DateTime startDateTime, DateTime endDateTime, DateTime currentTime)
     {
         if (Status == EventStatus.Active)
         {
@@ -70,7 +70,7 @@ public class EventAggregate : AggregateRoot<EventId>
                 "Times cannot be modified when the event is cancelled."));
         }
 
-        var timeIntervalResult = TimeInterval.Create(startDateTime, endDateTime);
+        var timeIntervalResult = TimeInterval.Create(startDateTime, endDateTime, currentTime);
         if (timeIntervalResult.HasErrors) return Result.Failure(timeIntervalResult.Error!);
 
         TimeInterval = timeIntervalResult.Value;
