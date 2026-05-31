@@ -24,6 +24,25 @@ public class EventAggregate : AggregateRoot<EventId>
 
     public static Result<EventAggregate> Create() => new EventAggregate(EventId.Create().Value);
 
+    public Result SetMaxNumberOfGuests(MaxNumberOfGuests maxNumberOfGuests)
+    {
+        if (Status == EventStatus.Cancelled)
+        {
+            return Result.Failure(Error.Validation("EventAggregate.Status", "A cancelled event cannot be modified."));
+        }
+
+        if (Status == EventStatus.Active && maxNumberOfGuests.Value < MaxNumberOfGuests.Value)
+        {
+            return Result.Failure(Error.Validation(
+                "EventAggregate.MaxNumberOfGuests",
+                "The maximum number of guests of an active event cannot be reduced."));
+        }
+
+        MaxNumberOfGuests = maxNumberOfGuests;
+
+        return Result.Success();
+    }
+
     public Result UpdateTitle(EventTitle title)
     {
         if (Status == EventStatus.Active)
