@@ -12,7 +12,8 @@ public class EventAggregateUnitTests
     [Fact]
     public void CreateEvent_Success_EmptyEventCreated()
     {
-        Result<EventAggregate> eventAggregate = EventAggregate.Create();
+        var eventId = EventId.Create().Value;
+        Result<EventAggregate> eventAggregate = EventAggregate.Create(eventId);
 
         Assert.True(eventAggregate.IsSuccess);
         Assert.NotNull(eventAggregate.Value);

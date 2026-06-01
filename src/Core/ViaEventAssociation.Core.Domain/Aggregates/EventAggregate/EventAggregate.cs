@@ -6,12 +6,12 @@ namespace ViaEventAssociation.Core.Domain.Aggregates.EventAggregate;
 
 public class EventAggregate : AggregateRoot<EventId>
 {
-    public EventStatus Status { get; private set; }
-    public MaxNumberOfGuests MaxNumberOfGuests { get; private set; }
-    public EventTitle Title { get; private set; }
-    public EventDescription Description { get; private set; }
-    public TimeInterval? TimeInterval { get; private set; }
-    public EventVisibility Visibility { get; private set; }
+    internal EventStatus Status { get; set; }
+    internal MaxNumberOfGuests MaxNumberOfGuests { get; private set; }
+    internal EventTitle Title { get; private set; }
+    internal EventDescription Description { get; private set; }
+    internal TimeInterval? TimeInterval { get; private set; }
+    internal EventVisibility Visibility { get; private set; }
 
     private EventAggregate(EventId id) : base(id)
     {
@@ -22,7 +22,7 @@ public class EventAggregate : AggregateRoot<EventId>
         Visibility = EventVisibility.Private;
     }
 
-    public static Result<EventAggregate> Create() => new EventAggregate(EventId.Create().Value);
+    public static Result<EventAggregate> Create(EventId id) => new EventAggregate(id);
 
     public Result SetMaxNumberOfGuests(MaxNumberOfGuests maxNumberOfGuests)
     {

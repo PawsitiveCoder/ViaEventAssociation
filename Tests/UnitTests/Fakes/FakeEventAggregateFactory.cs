@@ -9,10 +9,9 @@ public static class FakeEventAggregateFactory
 
     public static EventAggregate Create(EventStatus status)
     {
-        var aggregate = EventAggregate.Create().Value;
-        typeof(EventAggregate)
-            .GetProperty(nameof(EventAggregate.Status))!
-            .SetValue(aggregate, status);
+        var eventId = EventId.Create().Value;
+        var aggregate = EventAggregate.Create(eventId).Value;
+        aggregate.Status = status;
         return aggregate;
     }
 }
