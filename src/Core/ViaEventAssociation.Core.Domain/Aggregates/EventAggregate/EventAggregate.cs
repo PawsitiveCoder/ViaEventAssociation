@@ -24,6 +24,25 @@ public class EventAggregate : AggregateRoot<EventId>
 
     public static Result<EventAggregate> Create() => new EventAggregate(EventId.Create().Value);
 
+    public Result SetMaxNumberOfGuests(MaxNumberOfGuests maxNumberOfGuests)
+    {
+        if (Status == EventStatus.Cancelled)
+        {
+            return Result.Failure(Error.Validation("EventAggregate.Status", "A cancelled event cannot be modified."));
+        }
+
+        if (Status == EventStatus.Active && maxNumberOfGuests.Value < MaxNumberOfGuests.Value)
+        {
+            return Result.Failure(Error.Validation(
+                "EventAggregate.MaxNumberOfGuests",
+                "The maximum number of guests of an active event cannot be reduced."));
+        }
+
+        MaxNumberOfGuests = maxNumberOfGuests;
+
+        return Result.Success();
+    }
+
     public Result UpdateTitle(EventTitle title)
     {
         if (Status == EventStatus.Active)
@@ -91,6 +110,27 @@ public class EventAggregate : AggregateRoot<EventId>
         }
 
         Visibility = EventVisibility.Public;
+
+        return Result.Success();
+    }
+
+    public Result MarkAsPrivate()
+    {
+        if (Status == EventStatus.Active)
+        {
+            return Result.Failure(Error.Validation("EventAggregate.Status", "An active event cannot be made private."));
+        }
+
+        if (Status == EventStatus.Cancelled)
+        {
+            return Result.Failure(Error.Validation("EventAggregate.Status", "A cancelled event cannot be modified."));
+        }
+
+        if (Visibility == EventVisibility.Public)
+        {
+            Visibility = EventVisibility.Private;
+            Status = EventStatus.Draft;
+        }
 
         return Result.Success();
     }
