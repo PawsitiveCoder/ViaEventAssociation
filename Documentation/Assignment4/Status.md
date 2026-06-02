@@ -3,12 +3,17 @@
 * [x] ValueObject base
 * [x] Entity base
 * [x] Aggregate base
+* [x] Event aggregate repository
+* [x] Unit of work
+* [x] Handler
 * [ ] UC1 - Create event
     * [ ] value - EventId
     * [ ] S1
     * [ ] S2
     * [ ] S3
     * [ ] S4
+    * [x] Command
+    * [x] Handler
 * [ ] UC2 - Update title
     * [ ] value - EventTitle
     * [ ] S1
@@ -19,6 +24,8 @@
     * [ ] F4
     * [ ] F5
     * [ ] F6
+    * [x] Command
+    * [x] Handler
 * [ ] UC3 - The creator updates the description of an event
     * [ ] value - EventDescription
     * [ ] S1
