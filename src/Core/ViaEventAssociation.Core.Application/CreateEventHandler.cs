@@ -20,7 +20,6 @@ internal class CreateEventHandler : ICommandHandler<CreateEventCommand>
         var eventAggregate = EventAggregate.Create(command.Id);
 
         await _repository.AddAsync(eventAggregate.Value);
-        await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();
     }

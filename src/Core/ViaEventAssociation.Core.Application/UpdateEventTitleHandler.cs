@@ -29,11 +29,6 @@ internal class UpdateEventTitleHandler : ICommandHandler<UpdateEventTitleCommand
 
         var result = eventAggregate.UpdateTitle(command.EventTitle);
 
-        if (result.IsSuccess)
-        {
-            await _unitOfWork.SaveChangesAsync();
-        }
-
         return result;
     }
 }
