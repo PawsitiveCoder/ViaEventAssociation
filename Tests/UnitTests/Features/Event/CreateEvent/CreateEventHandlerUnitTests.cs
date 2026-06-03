@@ -1,8 +1,8 @@
 using JetBrains.Annotations;
 using UnitTests.Fakes;
+using UnitTests.Mocks;
 using ViaEventAssociation.Core.AppEntry;
 using ViaEventAssociation.Core.Application;
-using ViaEventAssociation.Core.Tools.OperationResult;
 
 namespace UnitTests.Features.Event.CreateEvent;
 
@@ -13,7 +13,7 @@ public class CreateEventHandlerUnitTests
     public async Task GivenNothing_WhenCreatingEvent_ThenEventIsCreatedWithIdAndDefaultValues()
     {
         var repository = new FakeEventAggregateRepository();
-        var unitOfWork = new FakeUnitOfWork();
+        var unitOfWork = new MockUnitOfWork();
         var handler = new CreateEventHandler(repository, unitOfWork);
 
         var result = CreateEventCommand.Create();

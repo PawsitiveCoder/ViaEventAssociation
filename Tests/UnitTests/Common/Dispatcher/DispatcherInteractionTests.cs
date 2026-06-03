@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using Microsoft.Extensions.DependencyInjection;
 using UnitTests.Fakes;
+using UnitTests.Mocks;
 using ViaEventAssociation.Core.AppEntry;
 using ViaEventAssociation.Core.AppEntry.Dispatcher;
 using ViaEventAssociation.Core.Application;
@@ -25,16 +26,16 @@ public class DispatcherInteractionTests
     public async Task DispatchAsync_OneCorrectHandler_Success()
     {
         var serviceProvider = ServiceBuilder.Init()
-            .WithHandler<CreateEventCommand, CreateEventHandlerMock>()
+            .WithHandler<CreateEventCommand, MockCommandHandler<CreateEventCommand>>()
             .Build();
         var commandDispatcher = new CommandDispatcher(serviceProvider);
-        var handlerMock = (CreateEventHandlerMock)serviceProvider.GetService<ICommandHandler<CreateEventCommand>>()!;
+        var handlerMock = (MockCommandHandler<CreateEventCommand>)serviceProvider.GetService<ICommandHandler<CreateEventCommand>>()!;
         var command = CreateEventCommand.Create();
 
         await commandDispatcher.DispatchAsync(command.Value);
 
-        Assert.Equal(1, handlerMock.invokeCount);
-        Assert.Equal(command.Value.Id, handlerMock.CreateEventCommand.Id);
+        Assert.Equal(1, handlerMock.InvokeCount);
+        Assert.Equal(command.Value.Id, handlerMock?.Command?.Id);
     }
 
     [Fact]
@@ -53,18 +54,18 @@ public class DispatcherInteractionTests
     public async Task DispatchAsync_ManyHandlersWithCorrectHandler_Success()
     {
         var serviceProvider = ServiceBuilder.Init()
-            .WithHandler<CreateEventCommand, CreateEventHandlerMock>()
+            .WithHandler<CreateEventCommand, MockCommandHandler<CreateEventCommand>>()
             .WithHandler<FakeCommand, FakeHandler>()
             .Build();
         var commandDispatcher = new CommandDispatcher(serviceProvider);
-        var handlerMock = (CreateEventHandlerMock)serviceProvider.GetService<ICommandHandler<CreateEventCommand>>()!;
+        var handlerMock = (MockCommandHandler<CreateEventCommand>)serviceProvider.GetService<ICommandHandler<CreateEventCommand>>()!;
         var command = CreateEventCommand.Create();
 
         await commandDispatcher.DispatchAsync(command.Value);
 
-        Assert.True(handlerMock.wasInvoked);
-        Assert.Equal(1, handlerMock.invokeCount);
-        Assert.Equal(command.Value.Id, handlerMock.CreateEventCommand.Id);
+        Assert.True(handlerMock.WasInvoked);
+        Assert.Equal(1, handlerMock.InvokeCount);
+        Assert.Equal(command.Value.Id, handlerMock?.Command?.Id);
     }
 
     [Fact]
