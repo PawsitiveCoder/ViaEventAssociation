@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using UnitTests.Fakes;
+using UnitTests.Mocks;
 using ViaEventAssociation.Core.AppEntry;
 using ViaEventAssociation.Core.Application;
 
@@ -12,8 +13,7 @@ public class SetMaxNumberOfGuestsHandlerTests
     public async Task HandleAsync_ValidCommand_SetsMaxGuests()
     {
         var repository = new FakeEventAggregateRepository();
-        var unitOfWork = new FakeUnitOfWork();
-        var handler = new SetMaxNumberOfGuestsHandler(repository, unitOfWork);
+        var handler = new SetMaxNumberOfGuestsHandler(repository);
 
         var eventAggregate = FakeEventAggregateFactory.Create();
         await repository.AddAsync(eventAggregate);
@@ -32,8 +32,7 @@ public class SetMaxNumberOfGuestsHandlerTests
     public async Task HandleAsync_EventNotFound_ReturnsFailure()
     {
         var repository = new FakeEventAggregateRepository();
-        var unitOfWork = new FakeUnitOfWork();
-        var handler = new SetMaxNumberOfGuestsHandler(repository, unitOfWork);
+        var handler = new SetMaxNumberOfGuestsHandler(repository);
 
         var commandResult = SetMaxNumberOfGuestsCommand.Create(Guid.NewGuid().ToString(), 40);
         var command = commandResult.Payload!;

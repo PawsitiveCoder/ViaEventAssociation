@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using UnitTests.Fakes;
+using UnitTests.Mocks;
 using ViaEventAssociation.Core.AppEntry;
 using ViaEventAssociation.Core.Application;
 
@@ -12,8 +13,7 @@ public class UpdateEventTimeIntervalHandlerTests
     public async Task HandleAsync_ValidCommand_UpdatesTimeInterval()
     {
         var repository = new FakeEventAggregateRepository();
-        var unitOfWork = new FakeUnitOfWork();
-        var handler = new UpdateEventTimeIntervalHandler(repository, unitOfWork);
+        var handler = new UpdateEventTimeIntervalHandler(repository);
 
         var eventAggregate = FakeEventAggregateFactory.Create();
         await repository.AddAsync(eventAggregate);
@@ -38,8 +38,7 @@ public class UpdateEventTimeIntervalHandlerTests
     public async Task HandleAsync_EventNotFound_ReturnsFailure()
     {
         var repository = new FakeEventAggregateRepository();
-        var unitOfWork = new FakeUnitOfWork();
-        var handler = new UpdateEventTimeIntervalHandler(repository, unitOfWork);
+        var handler = new UpdateEventTimeIntervalHandler(repository);
 
         var currentTime = new DateTime(2023, 8, 20, 10, 0, 0);
         var startDateTime = new DateTime(2023, 8, 25, 10, 0, 0);

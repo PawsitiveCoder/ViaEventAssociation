@@ -13,8 +13,8 @@ public class MakeEventPublicCommand
     {
         var eventIdResult = EventId.FromString(id);
 
-        return Result
-            .CombineResultsInto<MakeEventPublicCommand>(eventIdResult)
-            .WithPayloadIfSuccess(() => new MakeEventPublicCommand(eventIdResult.Value));
+        if (eventIdResult.HasErrors) return Result.Failure<MakeEventPublicCommand>(eventIdResult.Error);
+
+        return new MakeEventPublicCommand(eventIdResult.Value);
     }
 }

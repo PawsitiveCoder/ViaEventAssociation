@@ -1,6 +1,5 @@
 using ViaEventAssociation.Core.AppEntry;
 using ViaEventAssociation.Core.Domain.Aggregates.EventAggregate;
-using ViaEventAssociation.Core.Domain.Common.UnitOfWork;
 using ViaEventAssociation.Core.Tools.OperationResult;
 
 namespace ViaEventAssociation.Core.Application;
@@ -8,12 +7,10 @@ namespace ViaEventAssociation.Core.Application;
 internal class SetMaxNumberOfGuestsHandler : ICommandHandler<SetMaxNumberOfGuestsCommand>
 {
     private readonly IEventAggregateRepository _repository;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public SetMaxNumberOfGuestsHandler(IEventAggregateRepository repository, IUnitOfWork unitOfWork)
+    public SetMaxNumberOfGuestsHandler(IEventAggregateRepository repository)
     {
         _repository = repository;
-        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result> HandleAsync(SetMaxNumberOfGuestsCommand command)

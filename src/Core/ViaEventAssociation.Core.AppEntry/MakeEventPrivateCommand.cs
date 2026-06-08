@@ -13,8 +13,8 @@ public class MakeEventPrivateCommand
     {
         var eventIdResult = EventId.FromString(id);
 
-        return Result
-            .CombineResultsInto<MakeEventPrivateCommand>(eventIdResult)
-            .WithPayloadIfSuccess(() => new MakeEventPrivateCommand(eventIdResult.Value));
+        if (eventIdResult.HasErrors) return Result.Failure<MakeEventPrivateCommand>(eventIdResult.Error);
+
+        return new MakeEventPrivateCommand(eventIdResult.Value);
     }
 }

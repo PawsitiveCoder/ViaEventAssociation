@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using UnitTests.Fakes;
+using UnitTests.Mocks;
 using ViaEventAssociation.Core.AppEntry;
 using ViaEventAssociation.Core.Application;
 using ViaEventAssociation.Core.Domain.Aggregates.EventAggregate.Values;
@@ -13,8 +14,7 @@ public class MakeEventPrivateHandlerTests
     public async Task HandleAsync_ValidCommand_MarksAsPrivate()
     {
         var repository = new FakeEventAggregateRepository();
-        var unitOfWork = new FakeUnitOfWork();
-        var handler = new MakeEventPrivateHandler(repository, unitOfWork);
+        var handler = new MakeEventPrivateHandler(repository);
 
         var eventAggregate = FakeEventAggregateFactory.Create();
         // Assume event is made public first to test if it goes private
@@ -35,8 +35,7 @@ public class MakeEventPrivateHandlerTests
     public async Task HandleAsync_EventNotFound_ReturnsFailure()
     {
         var repository = new FakeEventAggregateRepository();
-        var unitOfWork = new FakeUnitOfWork();
-        var handler = new MakeEventPrivateHandler(repository, unitOfWork);
+        var handler = new MakeEventPrivateHandler(repository);
 
         var commandResult = MakeEventPrivateCommand.Create(Guid.NewGuid().ToString());
         var command = commandResult.Payload!;

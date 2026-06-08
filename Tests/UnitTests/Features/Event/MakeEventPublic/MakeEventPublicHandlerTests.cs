@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using UnitTests.Fakes;
+using UnitTests.Mocks;
 using ViaEventAssociation.Core.AppEntry;
 using ViaEventAssociation.Core.Application;
 using ViaEventAssociation.Core.Domain.Aggregates.EventAggregate.Values;
@@ -13,8 +14,7 @@ public class MakeEventPublicHandlerTests
     public async Task HandleAsync_ValidCommand_MarksAsPublic()
     {
         var repository = new FakeEventAggregateRepository();
-        var unitOfWork = new FakeUnitOfWork();
-        var handler = new MakeEventPublicHandler(repository, unitOfWork);
+        var handler = new MakeEventPublicHandler(repository);
 
         var eventAggregate = FakeEventAggregateFactory.Create();
         await repository.AddAsync(eventAggregate);
@@ -33,8 +33,7 @@ public class MakeEventPublicHandlerTests
     public async Task HandleAsync_EventNotFound_ReturnsFailure()
     {
         var repository = new FakeEventAggregateRepository();
-        var unitOfWork = new FakeUnitOfWork();
-        var handler = new MakeEventPublicHandler(repository, unitOfWork);
+        var handler = new MakeEventPublicHandler(repository);
 
         var commandResult = MakeEventPublicCommand.Create(Guid.NewGuid().ToString());
         var command = commandResult.Payload!;

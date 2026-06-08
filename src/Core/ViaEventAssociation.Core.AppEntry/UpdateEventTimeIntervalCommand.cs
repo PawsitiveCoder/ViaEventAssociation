@@ -18,17 +18,13 @@ public class UpdateEventTimeIntervalCommand
         CurrentTime = currentTime;
     }
 
-    public static Result<UpdateEventTimeIntervalCommand> Create(string id, DateTime startDateTime, DateTime endDateTime, DateTime? currentTime = null)
+    public static Result<UpdateEventTimeIntervalCommand> Create(string id, DateTime startDateTime, DateTime endDateTime, DateTime currentTime)
     {
         var eventIdResult = EventId.FromString(id);
-        var effectiveCurrentTime = currentTime ?? DateTime.Now;
-
-        // Since TimeInterval needs all three parameters and performs validation on them,
-        // we can pre-validate here using the domain logic to ensure the command only holds a valid interval.
-        var timeIntervalResult = TimeInterval.Create(startDateTime, endDateTime, effectiveCurrentTime);
+        var timeIntervalResult = TimeInterval.Create(startDateTime, endDateTime, currentTime);
 
         return Result
             .CombineResultsInto<UpdateEventTimeIntervalCommand>(eventIdResult, timeIntervalResult)
-            .WithPayloadIfSuccess(() => new UpdateEventTimeIntervalCommand(eventIdResult.Value, startDateTime, endDateTime, effectiveCurrentTime));
+            .WithPayloadIfSuccess(() => new UpdateEventTimeIntervalCommand(eventIdResult.Value, startDateTime, endDateTime, currentTime));
     }
 }

@@ -1,6 +1,5 @@
 using ViaEventAssociation.Core.AppEntry;
 using ViaEventAssociation.Core.Domain.Aggregates.EventAggregate;
-using ViaEventAssociation.Core.Domain.Common.UnitOfWork;
 using ViaEventAssociation.Core.Tools.OperationResult;
 
 namespace ViaEventAssociation.Core.Application;
@@ -8,12 +7,10 @@ namespace ViaEventAssociation.Core.Application;
 internal class MakeEventPublicHandler : ICommandHandler<MakeEventPublicCommand>
 {
     private readonly IEventAggregateRepository _repository;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public MakeEventPublicHandler(IEventAggregateRepository repository, IUnitOfWork unitOfWork)
+    public MakeEventPublicHandler(IEventAggregateRepository repository)
     {
         _repository = repository;
-        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result> HandleAsync(MakeEventPublicCommand command)

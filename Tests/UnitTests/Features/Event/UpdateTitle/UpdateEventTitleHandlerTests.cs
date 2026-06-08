@@ -14,8 +14,7 @@ public class UpdateEventTitleHandlerTests
     public async Task UpdateEventTitle_Success()
     {
         var repository = new FakeEventAggregateRepository();
-        var unitOfWork = new MockUnitOfWork();
-        var handler = new UpdateEventTitleHandler(repository, unitOfWork);
+        var handler = new UpdateEventTitleHandler(repository);
         var eventAggregate = FakeEventAggregateFactory.Create(EventStatus.Draft);
         await repository.AddAsync(eventAggregate);
         string newTitle = "Test title";
