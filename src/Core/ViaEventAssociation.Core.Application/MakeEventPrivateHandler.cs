@@ -12,7 +12,7 @@ internal class MakeEventPrivateHandler : ICommandHandler<MakeEventPrivateCommand
 
     public async Task<Result> HandleAsync(MakeEventPrivateCommand command)
     {
-        var eventAggregate = await _repository.GetByIdAsync(command.EventId.Value);
+        var eventAggregate = await _repository.GetByIdAsync(command.EventId);
 
         if (eventAggregate is null)
         {

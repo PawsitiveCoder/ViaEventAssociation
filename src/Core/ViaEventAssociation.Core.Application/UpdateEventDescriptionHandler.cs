@@ -12,7 +12,7 @@ internal class UpdateEventDescriptionHandler : ICommandHandler<UpdateEventDescri
 
     public async Task<Result> HandleAsync(UpdateEventDescriptionCommand command)
     {
-        var eventAggregate = await _repository.GetByIdAsync(command.EventId.Value);
+        var eventAggregate = await _repository.GetByIdAsync(command.EventId);
 
         if (eventAggregate is null)
         {

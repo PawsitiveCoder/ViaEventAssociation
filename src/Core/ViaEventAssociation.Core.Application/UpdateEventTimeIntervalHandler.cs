@@ -12,7 +12,7 @@ internal class UpdateEventTimeIntervalHandler : ICommandHandler<UpdateEventTimeI
 
     public async Task<Result> HandleAsync(UpdateEventTimeIntervalCommand command)
     {
-        var eventAggregate = await _repository.GetByIdAsync(command.EventId.Value);
+        var eventAggregate = await _repository.GetByIdAsync(command.EventId);
 
         if (eventAggregate is null)
         {

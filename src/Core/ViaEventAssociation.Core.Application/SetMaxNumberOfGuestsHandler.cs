@@ -12,7 +12,7 @@ internal class SetMaxNumberOfGuestsHandler : ICommandHandler<SetMaxNumberOfGuest
 
     public async Task<Result> HandleAsync(SetMaxNumberOfGuestsCommand command)
     {
-        var eventAggregate = await _repository.GetByIdAsync(command.EventId.Value);
+        var eventAggregate = await _repository.GetByIdAsync(command.EventId);
 
         if (eventAggregate is null)
         {

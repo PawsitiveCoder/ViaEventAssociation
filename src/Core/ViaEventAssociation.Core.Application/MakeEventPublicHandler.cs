@@ -12,7 +12,7 @@ internal class MakeEventPublicHandler : ICommandHandler<MakeEventPublicCommand>
 
     public async Task<Result> HandleAsync(MakeEventPublicCommand command)
     {
-        var eventAggregate = await _repository.GetByIdAsync(command.EventId.Value);
+        var eventAggregate = await _repository.GetByIdAsync(command.EventId);
 
         if (eventAggregate is null)
         {
