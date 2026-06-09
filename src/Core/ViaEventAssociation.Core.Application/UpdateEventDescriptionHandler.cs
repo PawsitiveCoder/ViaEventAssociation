@@ -8,10 +8,7 @@ internal class UpdateEventDescriptionHandler : ICommandHandler<UpdateEventDescri
 {
     private readonly IEventAggregateRepository _repository;
 
-    public UpdateEventDescriptionHandler(IEventAggregateRepository repository)
-    {
-        _repository = repository;
-    }
+    public UpdateEventDescriptionHandler(IEventAggregateRepository repository) => _repository = repository;
 
     public async Task<Result> HandleAsync(UpdateEventDescriptionCommand command)
     {

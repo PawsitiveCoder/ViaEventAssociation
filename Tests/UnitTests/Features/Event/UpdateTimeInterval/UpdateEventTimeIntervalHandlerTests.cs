@@ -1,8 +1,8 @@
 using JetBrains.Annotations;
 using UnitTests.Fakes;
-using UnitTests.Mocks;
 using ViaEventAssociation.Core.AppEntry;
 using ViaEventAssociation.Core.Application;
+using ViaEventAssociation.Core.Tools.OperationResult;
 
 namespace UnitTests.Features.Event.UpdateTimeInterval;
 
@@ -14,24 +14,24 @@ public class UpdateEventTimeIntervalHandlerTests
     {
         var repository = new FakeEventAggregateRepository();
         var handler = new UpdateEventTimeIntervalHandler(repository);
-
         var eventAggregate = FakeEventAggregateFactory.Create();
         await repository.AddAsync(eventAggregate);
-
         var currentTime = new DateTime(2023, 8, 20, 10, 0, 0);
         var startDateTime = new DateTime(2023, 8, 25, 10, 0, 0);
         var endDateTime = new DateTime(2023, 8, 25, 14, 0, 0);
 
-        var commandResult = UpdateEventTimeIntervalCommand.Create(eventAggregate.Id.Value.ToString(), startDateTime, endDateTime, currentTime);
-        var command = commandResult.Payload!;
+        var result = UpdateEventTimeIntervalCommand.Create(eventAggregate.Id.Value.ToString(), startDateTime, endDateTime, currentTime);
+        var command = result.Payload;
 
-        var result = await handler.HandleAsync(command);
+        Assert.NotNull(command);
 
-        Assert.True(result.IsSuccess);
-        var updatedEvent = await repository.GetByIdAsync(eventAggregate.Id.Value);
-        Assert.NotNull(updatedEvent!.TimeInterval);
-        Assert.Equal(startDateTime, updatedEvent.TimeInterval.StartDateTime);
-        Assert.Equal(endDateTime, updatedEvent.TimeInterval.EndDateTime);
+        var operationResult = await handler.HandleAsync(command);
+
+        Assert.True(operationResult.IsSuccess);
+        var updatedEvent = Assert.Single(repository.Events);
+        Assert.NotNull(updatedEvent.TimeInterval);
+        Assert.Equal(command.StartDateTime, updatedEvent.TimeInterval.StartDateTime);
+        Assert.Equal(command.EndDateTime, updatedEvent.TimeInterval.EndDateTime);
     }
 
     [Fact]
@@ -39,18 +39,19 @@ public class UpdateEventTimeIntervalHandlerTests
     {
         var repository = new FakeEventAggregateRepository();
         var handler = new UpdateEventTimeIntervalHandler(repository);
-
         var currentTime = new DateTime(2023, 8, 20, 10, 0, 0);
         var startDateTime = new DateTime(2023, 8, 25, 10, 0, 0);
         var endDateTime = new DateTime(2023, 8, 25, 14, 0, 0);
 
-        var commandResult = UpdateEventTimeIntervalCommand.Create(Guid.NewGuid().ToString(), startDateTime, endDateTime, currentTime);
-        var command = commandResult.Payload!;
+        var result = UpdateEventTimeIntervalCommand.Create(Guid.NewGuid().ToString(), startDateTime, endDateTime, currentTime);
+        var command = result.Payload;
 
-        var result = await handler.HandleAsync(command);
+        Assert.NotNull(command);
 
-        Assert.False(result.IsSuccess);
-        Assert.Equal("UpdateEventTimeIntervalHandler.HandleAsync", result.Error!.Code);
-        Assert.Contains("not found", result.Error.Description);
+        var operationResult = await handler.HandleAsync(command);
+
+        Assert.True(operationResult.HasErrors);
+        var error = Assert.Single(operationResult.Errors);
+        Assert.Equal(ErrorType.NotFound, error.ErrorType);
     }
 }

@@ -8,10 +8,7 @@ internal class MakeEventPublicHandler : ICommandHandler<MakeEventPublicCommand>
 {
     private readonly IEventAggregateRepository _repository;
 
-    public MakeEventPublicHandler(IEventAggregateRepository repository)
-    {
-        _repository = repository;
-    }
+    public MakeEventPublicHandler(IEventAggregateRepository repository) => _repository = repository;
 
     public async Task<Result> HandleAsync(MakeEventPublicCommand command)
     {

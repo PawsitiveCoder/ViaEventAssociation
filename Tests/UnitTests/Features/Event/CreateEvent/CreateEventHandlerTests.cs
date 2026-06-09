@@ -1,16 +1,15 @@
 using JetBrains.Annotations;
 using UnitTests.Fakes;
-using UnitTests.Mocks;
 using ViaEventAssociation.Core.AppEntry;
 using ViaEventAssociation.Core.Application;
 
 namespace UnitTests.Features.Event.CreateEvent;
 
 [TestSubject(typeof(CreateEventHandler))]
-public class CreateEventHandlerUnitTests
+public class CreateEventHandlerTests
 {
     [Fact]
-    public async Task GivenNothing_WhenCreatingEvent_ThenEventIsCreatedWithIdAndDefaultValues()
+    public async Task HandleAsync_ValidCommand_CreatesEvent()
     {
         var repository = new FakeEventAggregateRepository();
         var handler = new CreateEventHandler(repository);
@@ -23,8 +22,7 @@ public class CreateEventHandlerUnitTests
         var operationResult = await handler.HandleAsync(command);
 
         Assert.True(operationResult.IsSuccess);
-        Assert.Single(repository.Events);
-        var createdEvent = repository.Events.First();
+        var createdEvent = Assert.Single(repository.Events);
         Assert.Equal(command.Id, createdEvent.Id);
     }
 }

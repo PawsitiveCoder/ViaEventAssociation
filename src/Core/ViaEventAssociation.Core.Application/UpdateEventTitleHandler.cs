@@ -8,10 +8,7 @@ internal class UpdateEventTitleHandler : ICommandHandler<UpdateEventTitleCommand
 {
     private readonly IEventAggregateRepository _repository;
 
-    public UpdateEventTitleHandler(IEventAggregateRepository repository)
-    {
-        _repository = repository;
-    }
+    public UpdateEventTitleHandler(IEventAggregateRepository repository) => _repository = repository;
 
     public async Task<Result> HandleAsync(UpdateEventTitleCommand command)
     {

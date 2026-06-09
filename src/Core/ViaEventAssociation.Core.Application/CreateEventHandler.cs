@@ -8,10 +8,7 @@ internal class CreateEventHandler : ICommandHandler<CreateEventCommand>
 {
     private readonly IEventAggregateRepository _repository;
 
-    public CreateEventHandler(IEventAggregateRepository repository)
-    {
-        _repository = repository;
-    }
+    public CreateEventHandler(IEventAggregateRepository repository) => _repository = repository;
     public async Task<Result> HandleAsync(CreateEventCommand command)
     {
         var eventAggregate = EventAggregate.Create(command.Id);

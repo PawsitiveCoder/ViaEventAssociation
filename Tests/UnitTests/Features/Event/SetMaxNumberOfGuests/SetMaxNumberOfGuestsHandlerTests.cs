@@ -1,8 +1,8 @@
 using JetBrains.Annotations;
 using UnitTests.Fakes;
-using UnitTests.Mocks;
 using ViaEventAssociation.Core.AppEntry;
 using ViaEventAssociation.Core.Application;
+using ViaEventAssociation.Core.Tools.OperationResult;
 
 namespace UnitTests.Features.Event.SetMaxNumberOfGuests;
 
@@ -10,22 +10,23 @@ namespace UnitTests.Features.Event.SetMaxNumberOfGuests;
 public class SetMaxNumberOfGuestsHandlerTests
 {
     [Fact]
-    public async Task HandleAsync_ValidCommand_SetsMaxGuests()
+    public async Task HandleAsync_ValidCommand_SetsMaxNumberOfGuests()
     {
         var repository = new FakeEventAggregateRepository();
         var handler = new SetMaxNumberOfGuestsHandler(repository);
-
         var eventAggregate = FakeEventAggregateFactory.Create();
         await repository.AddAsync(eventAggregate);
 
-        var commandResult = SetMaxNumberOfGuestsCommand.Create(eventAggregate.Id.Value.ToString(), 40);
-        var command = commandResult.Payload!;
+        var result = SetMaxNumberOfGuestsCommand.Create(eventAggregate.Id.Value.ToString(), 40);
+        var command = result.Payload;
 
-        var result = await handler.HandleAsync(command);
+        Assert.NotNull(command);
 
-        Assert.True(result.IsSuccess);
-        var updatedEvent = await repository.GetByIdAsync(eventAggregate.Id.Value);
-        Assert.Equal(40, updatedEvent!.MaxNumberOfGuests.Value);
+        var operationResult = await handler.HandleAsync(command);
+
+        Assert.True(operationResult.IsSuccess);
+        var updatedEvent = Assert.Single(repository.Events);
+        Assert.Equal(command.MaxNumberOfGuests, updatedEvent.MaxNumberOfGuests);
     }
 
     [Fact]
@@ -34,13 +35,15 @@ public class SetMaxNumberOfGuestsHandlerTests
         var repository = new FakeEventAggregateRepository();
         var handler = new SetMaxNumberOfGuestsHandler(repository);
 
-        var commandResult = SetMaxNumberOfGuestsCommand.Create(Guid.NewGuid().ToString(), 40);
-        var command = commandResult.Payload!;
+        var result = SetMaxNumberOfGuestsCommand.Create(Guid.NewGuid().ToString(), 40);
+        var command = result.Payload;
 
-        var result = await handler.HandleAsync(command);
+        Assert.NotNull(command);
 
-        Assert.False(result.IsSuccess);
-        Assert.Equal("SetMaxNumberOfGuestsHandler.HandleAsync", result.Error!.Code);
-        Assert.Contains("not found", result.Error.Description);
+        var operationResult = await handler.HandleAsync(command);
+
+        Assert.True(operationResult.HasErrors);
+        var error = Assert.Single(operationResult.Errors);
+        Assert.Equal(ErrorType.NotFound, error.ErrorType);
     }
 }

@@ -1,9 +1,8 @@
 using JetBrains.Annotations;
 using UnitTests.Fakes;
-using UnitTests.Mocks;
 using ViaEventAssociation.Core.AppEntry;
 using ViaEventAssociation.Core.Application;
-using ViaEventAssociation.Core.Domain.Aggregates.EventAggregate.Values;
+using ViaEventAssociation.Core.Tools.OperationResult;
 
 namespace UnitTests.Features.Event.UpdateDescription;
 
@@ -11,22 +10,23 @@ namespace UnitTests.Features.Event.UpdateDescription;
 public class UpdateEventDescriptionHandlerTests
 {
     [Fact]
-    public async Task HandleAsync_ValidCommand_UpdatesDescription()
+    public async Task HandleAsync_ValidCommand_UpdatesEventDescription()
     {
         var repository = new FakeEventAggregateRepository();
         var handler = new UpdateEventDescriptionHandler(repository);
-
         var eventAggregate = FakeEventAggregateFactory.Create();
         await repository.AddAsync(eventAggregate);
 
-        var commandResult = UpdateEventDescriptionCommand.Create(eventAggregate.Id.Value.ToString(), "New description");
-        var command = commandResult.Payload!;
+        var result = UpdateEventDescriptionCommand.Create(eventAggregate.Id.Value.ToString(), "New description");
+        var command = result.Payload;
 
-        var result = await handler.HandleAsync(command);
+        Assert.NotNull(command);
 
-        Assert.True(result.IsSuccess);
-        var updatedEvent = await repository.GetByIdAsync(eventAggregate.Id.Value);
-        Assert.Equal("New description", updatedEvent!.Description.Value);
+        var operationResult = await handler.HandleAsync(command);
+
+        Assert.True(operationResult.IsSuccess);
+        var updatedEvent = Assert.Single(repository.Events);
+        Assert.Equal(command.EventDescription, updatedEvent.Description);
     }
 
     [Fact]
@@ -35,13 +35,15 @@ public class UpdateEventDescriptionHandlerTests
         var repository = new FakeEventAggregateRepository();
         var handler = new UpdateEventDescriptionHandler(repository);
 
-        var commandResult = UpdateEventDescriptionCommand.Create(Guid.NewGuid().ToString(), "New description");
-        var command = commandResult.Payload!;
+        var result = UpdateEventDescriptionCommand.Create(Guid.NewGuid().ToString(), "New description");
+        var command = result.Payload;
 
-        var result = await handler.HandleAsync(command);
+        Assert.NotNull(command);
 
-        Assert.False(result.IsSuccess);
-        Assert.Equal("UpdateEventDescriptionHandler.HandleAsync", result.Error!.Code);
-        Assert.Contains("not found", result.Error.Description);
+        var operationResult = await handler.HandleAsync(command);
+
+        Assert.True(operationResult.HasErrors);
+        var error = Assert.Single(operationResult.Errors);
+        Assert.Equal(ErrorType.NotFound, error.ErrorType);
     }
 }

@@ -8,10 +8,7 @@ internal class SetMaxNumberOfGuestsHandler : ICommandHandler<SetMaxNumberOfGuest
 {
     private readonly IEventAggregateRepository _repository;
 
-    public SetMaxNumberOfGuestsHandler(IEventAggregateRepository repository)
-    {
-        _repository = repository;
-    }
+    public SetMaxNumberOfGuestsHandler(IEventAggregateRepository repository) => _repository = repository;
 
     public async Task<Result> HandleAsync(SetMaxNumberOfGuestsCommand command)
     {

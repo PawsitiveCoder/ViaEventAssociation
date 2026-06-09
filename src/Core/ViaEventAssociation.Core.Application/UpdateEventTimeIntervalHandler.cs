@@ -8,10 +8,7 @@ internal class UpdateEventTimeIntervalHandler : ICommandHandler<UpdateEventTimeI
 {
     private readonly IEventAggregateRepository _repository;
 
-    public UpdateEventTimeIntervalHandler(IEventAggregateRepository repository)
-    {
-        _repository = repository;
-    }
+    public UpdateEventTimeIntervalHandler(IEventAggregateRepository repository) => _repository = repository;
 
     public async Task<Result> HandleAsync(UpdateEventTimeIntervalCommand command)
     {

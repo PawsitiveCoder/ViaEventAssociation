@@ -11,7 +11,7 @@ public class EventAggregate : AggregateRoot<EventId>
     internal EventTitle Title { get; private set; }
     internal EventDescription Description { get; private set; }
     internal TimeInterval? TimeInterval { get; private set; }
-    internal EventVisibility Visibility { get; private set; }
+    internal EventVisibility Visibility { get; set; }
 
     private EventAggregate(EventId id) : base(id)
     {

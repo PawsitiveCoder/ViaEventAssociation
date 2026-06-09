@@ -9,16 +9,16 @@ namespace UnitTests.Common.Services;
 [TestSubject(typeof(DependencyInjection))]
 public class DependencyInjectionUnitTests
 {
-  [Theory]
-  [InlineData(typeof(ICommandHandler<CreateEventCommand>))]
-  [InlineData(typeof(ICommandHandler<UpdateEventTitleCommand>))]
-  public void AddApplicationCommandHandlers_ShouldRegisterCommandHandlers(Type serviceType)
-  {
-    var services = new ServiceCollection();
+    [Theory]
+    [InlineData(typeof(ICommandHandler<CreateEventCommand>))]
+    [InlineData(typeof(ICommandHandler<UpdateEventTitleCommand>))]
+    public void AddApplicationCommandHandlers_ShouldRegisterCommandHandlers(Type serviceType)
+    {
+        var services = new ServiceCollection();
 
-    services.AddApplicationCommandHandlers();
+        services.AddApplicationCommandHandlers();
 
-    var serviceDescriptor = services.FirstOrDefault(sd => sd.ServiceType == serviceType);
-    Assert.NotNull(serviceDescriptor);
-  }
+        var serviceDescriptor = services.FirstOrDefault(sd => sd.ServiceType == serviceType);
+        Assert.NotNull(serviceDescriptor);
+    }
 }

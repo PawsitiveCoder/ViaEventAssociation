@@ -14,4 +14,11 @@ public static class FakeEventAggregateFactory
         aggregate.Status = status;
         return aggregate;
     }
+
+    public static EventAggregate Create(EventVisibility visibility)
+    {
+        var eventAggregate = Create();
+        eventAggregate.Visibility = visibility;
+        return eventAggregate;
+    }
 }
