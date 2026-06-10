@@ -12,17 +12,11 @@ internal class UpdateEventTitleHandler : ICommandHandler<UpdateEventTitleCommand
 
     public async Task<Result> HandleAsync(UpdateEventTitleCommand command)
     {
-        var eventAggregate = await _repository.GetByIdAsync(command.EventId.Value);
+        var eventAggregate = await _repository.GetByIdAsync(command.EventId);
 
-        // TODO: Check if this way of handling not found is correct.
-        // or should the repository even return a nullable value?
-        if (eventAggregate is null)
-        {
-            return Result.Failure(Error.NotFound("UpdateEventTitleHandler.HandleAsync", $"Event with id {command.EventId.Value} not found"));
-        }
-
-        var result = eventAggregate.UpdateTitle(command.EventTitle);
-
-        return result;
+        return eventAggregate.Match(
+            onSome: e => e.UpdateTitle(command.EventTitle),
+            onNone: () => Error.NotFound("UpdateEventTitleHandler.HandleAsync", $"Event with id {command.EventId.Value} not found")
+        );
     }
 }

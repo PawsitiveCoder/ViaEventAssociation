@@ -1,20 +1,41 @@
 using ViaEventAssociation.Core.Domain.Aggregates.EventAggregate;
+using ViaEventAssociation.Core.Domain.Aggregates.EventAggregate.Values;
+using ViaEventAssociation.Core.Tools.OperationResult;
+using ViaEventAssociation.Core.Tools.Option;
+using ViaEventAssociation.Infrastructure.EfcDmPersistence;
 
 namespace UnitTests.Fakes;
 
-public class FakeEventAggregateRepository : IEventAggregateRepository
+public class FakeEventAggregateRepository : RepositoryBase<EventAggregate, EventId>, IEventAggregateRepository
 {
     public List<EventAggregate> Events { get; private set; } = [];
 
-    public Task AddAsync(EventAggregate eventAggregate)
+    // TODO: Remove this and pass a mock context to the base constructor instead.
+    public FakeEventAggregateRepository() : base(null)
     {
-        Events.Add(eventAggregate);
-        return Task.CompletedTask;
     }
 
-    public Task<EventAggregate?> GetByIdAsync(Guid id)
+    public FakeEventAggregateRepository(DmContext dmContext) : base(dmContext)
     {
-        var eventAggregate = Events.Find(e => e.Id.Value == id);
-        return Task.FromResult(eventAggregate);
+    }
+
+    public override async Task AddAsync(EventAggregate aggregate) =>
+        Events.Add(aggregate);
+
+    public override async Task<Option<EventAggregate>> GetByIdAsync(EventId id) =>
+        Events.Find(e => e.Id == id);
+
+    public override async Task<Result> RemoveAsync(EventId id)
+    {
+        var root = Events.Find(e => e.Id == id);
+
+        if (root is null)
+        {
+            return Error.NotFound("EventAggregate.NotFound", $"Aggregate root with id {id} not found.");
+        }
+
+        Events.Remove(root);
+
+        return Result.Success();
     }
 }

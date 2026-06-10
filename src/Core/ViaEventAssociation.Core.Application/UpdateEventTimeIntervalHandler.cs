@@ -12,15 +12,11 @@ internal class UpdateEventTimeIntervalHandler : ICommandHandler<UpdateEventTimeI
 
     public async Task<Result> HandleAsync(UpdateEventTimeIntervalCommand command)
     {
-        var eventAggregate = await _repository.GetByIdAsync(command.EventId.Value);
+        var eventAggregate = await _repository.GetByIdAsync(command.EventId);
 
-        if (eventAggregate is null)
-        {
-            return Result.Failure(Error.NotFound("UpdateEventTimeIntervalHandler.HandleAsync", $"Event with id {command.EventId.Value} not found"));
-        }
-
-        var result = eventAggregate.UpdateTimeInterval(command.StartDateTime, command.EndDateTime, command.CurrentTime);
-
-        return result;
+        return eventAggregate.Match(
+            onSome: e => e.UpdateTimeInterval(command.StartDateTime, command.EndDateTime, command.CurrentTime),
+            onNone: () => Error.NotFound("UpdateEventTimeIntervalHandler.HandleAsync", $"Event with id {command.EventId.Value} not found")
+        );
     }
 }

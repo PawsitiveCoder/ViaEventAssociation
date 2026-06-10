@@ -12,15 +12,11 @@ internal class MakeEventPrivateHandler : ICommandHandler<MakeEventPrivateCommand
 
     public async Task<Result> HandleAsync(MakeEventPrivateCommand command)
     {
-        var eventAggregate = await _repository.GetByIdAsync(command.EventId.Value);
+        var eventAggregate = await _repository.GetByIdAsync(command.EventId);
 
-        if (eventAggregate is null)
-        {
-            return Result.Failure(Error.NotFound("MakeEventPrivateHandler.HandleAsync", $"Event with id {command.EventId.Value} not found"));
-        }
-
-        var result = eventAggregate.MarkAsPrivate();
-
-        return result;
+        return eventAggregate.Match(
+            onSome: e => e.MarkAsPrivate(),
+            onNone: () => Error.NotFound("MakeEventPrivateHandler.HandleAsync", $"Event with id {command.EventId.Value} not found")
+        );
     }
 }

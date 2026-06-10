@@ -12,15 +12,11 @@ internal class UpdateEventDescriptionHandler : ICommandHandler<UpdateEventDescri
 
     public async Task<Result> HandleAsync(UpdateEventDescriptionCommand command)
     {
-        var eventAggregate = await _repository.GetByIdAsync(command.EventId.Value);
+        var eventAggregate = await _repository.GetByIdAsync(command.EventId);
 
-        if (eventAggregate is null)
-        {
-            return Result.Failure(Error.NotFound("UpdateEventDescriptionHandler.HandleAsync", $"Event with id {command.EventId.Value} not found"));
-        }
-
-        var result = eventAggregate.UpdateDescription(command.EventDescription);
-
-        return result;
+        return eventAggregate.Match(
+            onSome: e => e.UpdateDescription(command.EventDescription),
+            onNone: () => Error.NotFound("UpdateEventDescriptionHandler.HandleAsync", $"Event with id {command.EventId.Value} not found")
+        );
     }
 }

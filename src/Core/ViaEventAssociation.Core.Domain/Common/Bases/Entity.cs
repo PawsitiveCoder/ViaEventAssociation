@@ -2,6 +2,7 @@ namespace ViaEventAssociation.Core.Domain.Common.Bases;
 
 public abstract class Entity<T> where T : notnull
 {
+    // TODO: Consider making this private
     public T Id { get; }
 
     protected Entity(T id) => Id = id;
