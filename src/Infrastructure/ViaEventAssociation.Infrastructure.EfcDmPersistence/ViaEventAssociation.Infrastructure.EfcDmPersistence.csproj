@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../../Core/Tools/ViaEventAssociation.Core.Tools.Option/ViaEventAssociation.Core.Tools.Option.csproj" />
     <ProjectReference Include="../../Core/ViaEventAssociation.Core.Domain/ViaEventAssociation.Core.Domain.csproj" />
   </ItemGroup>
 
