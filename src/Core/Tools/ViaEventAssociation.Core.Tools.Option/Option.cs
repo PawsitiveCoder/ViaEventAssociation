@@ -18,7 +18,7 @@ public record Option<T>
     public static Option<T> None() => new(default, false);
 
     public TResult Match<TResult>(Func<T, TResult> onSome, Func<TResult> onNone) =>
-        _value is null ? onNone() : onSome(_value);
+        IsSome ? onSome(_value!) : onNone();
 
     public static implicit operator Option<T>(T? value) =>
         value is null ? None() : Some(value);

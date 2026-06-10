@@ -8,5 +8,5 @@ public class UnitOfWork : IUnitOfWork
 
     public UnitOfWork(DmContext dmContext) => _dmContext = dmContext;
 
-    public Task SaveChangesAsync() => _dmContext.SaveChangesAsync();
+    public async Task SaveChangesAsync() => await _dmContext.SaveChangesAsync();
 }
