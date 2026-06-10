@@ -75,6 +75,7 @@ public class EventAggregate : AggregateRoot<EventId>
         return Result.Success();
     }
 
+    // TODO: Receive value object instead of primitives
     public Result UpdateTimeInterval(DateTime startDateTime, DateTime endDateTime, DateTime currentTime)
     {
         if (Status == EventStatus.Active)
