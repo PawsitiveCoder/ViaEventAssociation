@@ -1,12 +1,11 @@
-namespace IntegrationTests.DmContextConfiguration;
+namespace IntegrationTests.EfcDmPersistence;
 
 public static class DmContextHelpers
 {
     public static DmContext SetupContext()
     {
         DbContextOptionsBuilder<DmContext> optionsBuilder = new();
-        string testDbName = "Test" + Guid.NewGuid() + ".db";
-        optionsBuilder.UseSqlite(@"Data Source = " + testDbName);
+        optionsBuilder.UseSqlite($"Data Source=TestDmContext-{Guid.NewGuid()}.sqlite");
         DmContext context = new(optionsBuilder.Options);
         context.Database.EnsureDeleted();
         context.Database.EnsureCreated();

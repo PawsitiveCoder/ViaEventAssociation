@@ -1,6 +1,4 @@
-using ViaEventAssociation.Core.Domain.Aggregates.EventAggregate.Values;
-
-namespace IntegrationTests.DmContextConfiguration;
+namespace IntegrationTests.EfcDmPersistence.EventAggregatePersistence;
 
 [TestSubject(typeof(EventAggregateConfiguration))]
 public class EventAggregateConfigurationTests

@@ -20,6 +20,7 @@
     <Project Path="src/Core/ViaEventAssociation.Core.AppEntry/ViaEventAssociation.Core.AppEntry.csproj" />
     <Project Path="src/Core/ViaEventAssociation.Core.Application/ViaEventAssociation.Core.Application.csproj" />
     <Project Path="src/Core/ViaEventAssociation.Core.Domain/ViaEventAssociation.Core.Domain.csproj" />
+    <Project Path="src/Core/ViaEventAssociation.Core.QueryContracts/ViaEventAssociation.Core.QueryContracts.csproj" />
   </Folder>
   <Folder Name="/src/Core/Tools/">
     <Project Path="src/Core/Tools/ViaEventAssociation.Core.Tools.OperationResult/ViaEventAssociation.Core.Tools.OperationResult.csproj" />
@@ -27,9 +28,12 @@
   </Folder>
   <Folder Name="/src/Infrastructure/">
     <Project Path="src/Infrastructure/ViaEventAssociation.Infrastructure.EfcDmPersistence/ViaEventAssociation.Infrastructure.EfcDmPersistence.csproj" />
+    <Project Path="src/Infrastructure/ViaEventAssociation.Infrastructure.EfcQueries/ViaEventAssociation.Infrastructure.EfcQueries.csproj" />
+    <Project Path="src/Infrastructure/ViaEventAssociation.Infrastructure.Time/ViaEventAssociation.Infrastructure.Time.csproj" />
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="Tests/IntegrationTests/IntegrationTests.csproj" />
+    <Project Path="Tests/Shared/Shared.csproj" />
     <Project Path="Tests/UnitTests/UnitTests.csproj" />
   </Folder>
 </Solution>

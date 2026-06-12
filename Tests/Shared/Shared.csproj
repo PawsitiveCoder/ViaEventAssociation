@@ -9,18 +9,13 @@
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.4" />
-    <PackageReference Include="JetBrains.Annotations" Version="2025.2.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../src/Core/ViaEventAssociation.Core.QueryContracts/ViaEventAssociation.Core.QueryContracts.csproj" />
     <ProjectReference Include="../../src/Core/ViaEventAssociation.Core.Domain/ViaEventAssociation.Core.Domain.csproj" />
-    <ProjectReference Include="../../src/Infrastructure/ViaEventAssociation.Infrastructure.EfcDmPersistence/ViaEventAssociation.Infrastructure.EfcDmPersistence.csproj" />
-    <ProjectReference Include="../../src/Infrastructure/ViaEventAssociation.Infrastructure.EfcQueries/ViaEventAssociation.Infrastructure.EfcQueries.csproj" />
-    <ProjectReference Include="../Shared/Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
