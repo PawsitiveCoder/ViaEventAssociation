@@ -1,0 +1,5 @@
+global using ViaEventAssociation.Core.Domain.Aggregates.EventAggregate;
+global using ViaEventAssociation.Core.Domain.Aggregates.EventAggregate.Values;
+global using ViaEventAssociation.Infrastructure.EfcDmPersistence;
+global using ViaEventAssociation.Infrastructure.EfcDmPersistence.EventAggregatePersistence;
+global using ViaEventAssociation.Infrastructure.EfcDmPersistence.UnitOfWork;

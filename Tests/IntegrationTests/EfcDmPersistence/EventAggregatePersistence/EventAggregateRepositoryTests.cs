@@ -1,8 +1,4 @@
-using ViaEventAssociation.Core.Domain.Aggregates.EventAggregate.Values;
-using ViaEventAssociation.Infrastructure.EfcDmPersistence.UnitOfWork;
-using IntegrationTests.DmContextConfiguration;
-
-namespace IntegrationTests.Repositories;
+namespace IntegrationTests.EfcDmPersistence.EventAggregatePersistence;
 
 [TestSubject(typeof(EventAggregateRepository))]
 public class EventAggregateRepositoryTests
