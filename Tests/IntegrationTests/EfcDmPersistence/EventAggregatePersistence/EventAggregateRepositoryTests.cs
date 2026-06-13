@@ -40,15 +40,21 @@ public class EventAggregateRepositoryTests
         var title = EventTitle.Create("Repository test event").Value;
         var description = EventDescription.Create("Saved and loaded through the repository.").Value;
         var maxGuests = MaxNumberOfGuests.Create(25).Value;
-        var now = DateTime.UtcNow;
-        var startDateTime = now.AddHours(2);
-        var endDateTime = now.AddHours(4);
+        var now = new DateTime(2026, 1, 1, 9, 0, 0, DateTimeKind.Utc);
+        var startDateTime = new DateTime(2026, 1, 1, 11, 0, 0, DateTimeKind.Utc);
+        var endDateTime = new DateTime(2026, 1, 1, 13, 0, 0, DateTimeKind.Utc);
         var eventAggregate = EventAggregate.Create(id).Value;
-        eventAggregate.UpdateTitle(title);
-        eventAggregate.UpdateDescription(description);
-        eventAggregate.SetMaxNumberOfGuests(maxGuests);
-        eventAggregate.UpdateTimeInterval(startDateTime, endDateTime, now);
-        eventAggregate.MarkAsPublic();
+        var updateTitleResult = eventAggregate.UpdateTitle(title);
+        var updateDescriptionResult = eventAggregate.UpdateDescription(description);
+        var setMaxGuestsResult = eventAggregate.SetMaxNumberOfGuests(maxGuests);
+        var updateTimeIntervalResult = eventAggregate.UpdateTimeInterval(startDateTime, endDateTime, now);
+        var makePublicResult = eventAggregate.MarkAsPublic();
+
+        Assert.True(updateTitleResult.IsSuccess);
+        Assert.True(updateDescriptionResult.IsSuccess);
+        Assert.True(setMaxGuestsResult.IsSuccess);
+        Assert.True(updateTimeIntervalResult.IsSuccess);
+        Assert.True(makePublicResult.IsSuccess);
 
         await repository.AddAsync(eventAggregate);
         await unitOfWork.SaveChangesAsync();
