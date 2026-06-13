@@ -1,0 +1,25 @@
+name: .NET Tests
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore dependencies
+        run: dotnet restore ViaEventAssociation.sln
+
+      - name: Build
+        run: dotnet build ViaEventAssociation.sln --no-restore
+
+      - name: Test
+        run: dotnet test ViaEventAssociation.sln --no-build --verbosity normal
