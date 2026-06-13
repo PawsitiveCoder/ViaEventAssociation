@@ -39,12 +39,11 @@ public class EventsCalendarOverviewQueryHandler : IQueryHandler<EventsCalendarOv
             .GroupBy(e => e.EventDay)
             .ToDictionary(
                 group => int.Parse(group.Key),
-                group => group
+                group => (IReadOnlyCollection<EventsCalendarOverviewQuery.EventOnDay>)group
+                    .OrderBy(e => e.EventTime)
                     .Select(e => new EventsCalendarOverviewQuery.EventOnDay(e.Id, e.Title, e.EventTime))
                     .ToList()
-                    .AsReadOnly() as IReadOnlyCollection<EventsCalendarOverviewQuery.EventOnDay>
-            )
-            .AsReadOnly();
+            );
 
         return new EventsCalendarOverviewQuery.Answer(year, month, result);
     }

@@ -22,8 +22,8 @@ public class BrowseUpcomingEventsQueryHandler : IQueryHandler<BrowseUpcomingEven
     {
         var currentTime = _systemTime.CurrentTime().ToString("yyyy-MM-ddTHH:mm:ss");
         var searchText = query.SearchText ?? BrowseUpcomingEventsQuery.DefaultSearchText;
-        var pageNumber = query.PageNumber ?? BrowseUpcomingEventsQuery.DefaultPageNumber;
-        var pageSize = query.PageSize ?? BrowseUpcomingEventsQuery.DefaultPageSize;
+        var pageNumber = Math.Max(1, query.PageNumber ?? BrowseUpcomingEventsQuery.DefaultPageNumber);
+        var pageSize = Math.Max(1, query.PageSize ?? BrowseUpcomingEventsQuery.DefaultPageSize);
 
         var upcomingEvents = _context.EventAggregates
             .Where(e => e.Status.ToLower().Equals(EventStatus.Active.Value.ToLower()))
