@@ -55,13 +55,13 @@ public sealed record UpcomingEventListItemResponse(
     int MaxNumberOfGuests
 );
 
-public class BrowseUpcomingEventsRequestToQueryConfig : IMappingConfig<BrowseUpcomingEventsRequest, BrowseUpcomingEventsQuery.Query>
+internal class BrowseUpcomingEventsRequestToQueryConfig : IMappingConfig<BrowseUpcomingEventsRequest, BrowseUpcomingEventsQuery.Query>
 {
     public BrowseUpcomingEventsQuery.Query Map(BrowseUpcomingEventsRequest input) =>
         new(input.SearchText, input.PageNumber, input.PageSize);
 }
 
-public class BrowseUpcomingEventsAnswerToResponseConfig : IMappingConfig<BrowseUpcomingEventsQuery.Answer, BrowseUpcomingEventsResponse>
+internal class BrowseUpcomingEventsAnswerToResponseConfig : IMappingConfig<BrowseUpcomingEventsQuery.Answer, BrowseUpcomingEventsResponse>
 {
     public BrowseUpcomingEventsResponse Map(BrowseUpcomingEventsQuery.Answer input) =>
         new(

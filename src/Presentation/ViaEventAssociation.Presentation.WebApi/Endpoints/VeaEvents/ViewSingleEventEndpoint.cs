@@ -45,13 +45,13 @@ public sealed record ViewSingleEventResponse(
     int MaxNumberOfGuests
 );
 
-public class ViewSingleEventRequestToQueryConfig : IMappingConfig<ViewSingleEventRequest, ViewSingleEventQuery.Query>
+internal class ViewSingleEventRequestToQueryConfig : IMappingConfig<ViewSingleEventRequest, ViewSingleEventQuery.Query>
 {
     public ViewSingleEventQuery.Query Map(ViewSingleEventRequest input) =>
         new(input.EventId);
 }
 
-public class ViewSingleEventAnswerToResponseConfig : IMappingConfig<ViewSingleEventQuery.Answer, ViewSingleEventResponse>
+internal class ViewSingleEventAnswerToResponseConfig : IMappingConfig<ViewSingleEventQuery.Answer, ViewSingleEventResponse>
 {
     public ViewSingleEventResponse Map(ViewSingleEventQuery.Answer input) =>
         new(

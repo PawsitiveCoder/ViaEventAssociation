@@ -2,7 +2,7 @@ using ViaEventAssociation.Core.Domain.Common.UnitOfWork;
 
 namespace ViaEventAssociation.Infrastructure.EfcDmPersistence.UnitOfWork;
 
-public class UnitOfWork : IUnitOfWork
+internal class UnitOfWork : IUnitOfWork
 {
     private readonly DmContext _dmContext;
 

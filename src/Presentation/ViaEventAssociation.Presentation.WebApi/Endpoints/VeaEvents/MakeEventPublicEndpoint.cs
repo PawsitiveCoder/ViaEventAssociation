@@ -22,15 +22,15 @@ public class MakeEventPublicEndpoint
     {
         var commandResult = MakeEventPublicCommand.Create(request.EventId);
 
-        if (commandResult.HasErrors) return TypedResults.BadRequest(commandResult.Errors);
+        if (commandResult.HasErrors) return TypedResults.BadRequest(commandResult.Errors.ToList());
 
         var result = await _commandDispatcher.DispatchAsync(commandResult.Value);
 
         if (result.HasErrors)
         {
             return result.Error?.ErrorType == ErrorType.NotFound
-                ? TypedResults.NotFound(result.Errors)
-                : TypedResults.BadRequest(result.Errors);
+                ? TypedResults.NotFound(result.Errors.ToList())
+                : TypedResults.BadRequest(result.Errors.ToList());
         }
 
         return TypedResults.NoContent();

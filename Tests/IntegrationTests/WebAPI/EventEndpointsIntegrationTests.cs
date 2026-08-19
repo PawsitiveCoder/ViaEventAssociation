@@ -27,7 +27,7 @@ public class EventEndpointsIntegrationTests
     }
 
     [Fact]
-    public async Task UpdateEventTitle_WhenRequestIsValid_ReturnsNoContent_AndUpdatesReadModel()
+    public async Task UpdateEventTitle_WhenRequestIsValid_ReturnsNoContent()
     {
         await using var webAppFactory = new VeaWebApplicationFactory();
         await webAppFactory.ResetDatabaseAsync();

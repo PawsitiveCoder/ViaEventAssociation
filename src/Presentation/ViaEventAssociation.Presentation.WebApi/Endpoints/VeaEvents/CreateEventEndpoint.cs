@@ -21,11 +21,11 @@ public class CreateEventEndpoint
     {
         var commandResult = CreateEventCommand.Create();
 
-        if (commandResult.HasErrors) return TypedResults.BadRequest(commandResult.Errors);
+        if (commandResult.HasErrors) return TypedResults.BadRequest(commandResult.Errors.ToList());
 
         var result = await _commandDispatcher.DispatchAsync(commandResult.Value);
 
-        if (result.HasErrors) return TypedResults.BadRequest(result.Errors);
+        if (result.HasErrors) return TypedResults.BadRequest(result.Errors.ToList());
 
         return TypedResults.NoContent();
     }

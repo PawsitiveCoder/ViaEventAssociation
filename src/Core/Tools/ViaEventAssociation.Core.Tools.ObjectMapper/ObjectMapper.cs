@@ -2,7 +2,7 @@ using System.Text.Json;
 
 namespace ViaEventAssociation.Core.Tools.ObjectMapper;
 
-public class ObjectMapper : IObjectMapper
+internal class ObjectMapper : IObjectMapper
 {
     private readonly IServiceProvider _serviceProvider;
 

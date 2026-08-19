@@ -6,7 +6,7 @@ using ViaEventAssociation.Core.QueryContracts.Queries;
 
 namespace ViaEventAssociation.Infrastructure.EfcQueries.QueryHandlers;
 
-public class BrowseUpcomingEventsQueryHandler : IQueryHandler<BrowseUpcomingEventsQuery.Query, BrowseUpcomingEventsQuery.Answer>
+internal class BrowseUpcomingEventsQueryHandler : IQueryHandler<BrowseUpcomingEventsQuery.Query, BrowseUpcomingEventsQuery.Answer>
 {
     private readonly QueryContext _context;
     private readonly ISystemTime _systemTime;

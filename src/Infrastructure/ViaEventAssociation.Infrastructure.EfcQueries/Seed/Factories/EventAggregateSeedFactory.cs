@@ -3,7 +3,7 @@ using ViaEventAssociation.Infrastructure.EfcQueries.Models;
 
 namespace ViaEventAssociation.Infrastructure.EfcQueries.Seed.Factories;
 
-public class EventAggregateSeedFactory
+internal class EventAggregateSeedFactory
 {
     private const string _jsonEvents = """
     [

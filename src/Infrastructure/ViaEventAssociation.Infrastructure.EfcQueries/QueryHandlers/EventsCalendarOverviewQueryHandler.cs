@@ -7,7 +7,7 @@ using ViaEventAssociation.Core.QueryContracts.Queries;
 
 namespace ViaEventAssociation.Infrastructure.EfcQueries.QueryHandlers;
 
-public class EventsCalendarOverviewQueryHandler : IQueryHandler<EventsCalendarOverviewQuery.Query, EventsCalendarOverviewQuery.Answer>
+internal class EventsCalendarOverviewQueryHandler : IQueryHandler<EventsCalendarOverviewQuery.Query, EventsCalendarOverviewQuery.Answer>
 {
     private readonly QueryContext _context;
     private readonly ISystemTime _systemTime;

@@ -34,4 +34,38 @@ public class OperationResultUnitTests
         Assert.Null(result.Payload);
         Assert.Equal("test.validation", result.Error!.Code);
     }
+
+    [Fact]
+    public void Value_CannotBeReassignedByCaller()
+    {
+        var valueProperty = typeof(Result<string>).GetProperty(nameof(Result<string>.Value));
+
+        Assert.NotNull(valueProperty);
+        Assert.Null(valueProperty.SetMethod);
+    }
+
+    [Fact]
+    public void Errors_CannotBeMutatedByCaller()
+    {
+        Result result = Result.Failure(Error.Validation("test.validation", "Invalid test value."));
+        var errors = Assert.IsAssignableFrom<IList<Error>>(result.Errors);
+
+        Assert.Throws<NotSupportedException>(() =>
+            errors.Add(Error.Failure("test.failure", "Should not be added.")));
+        Assert.Single(result.Errors);
+    }
+
+    [Fact]
+    public void WithResult_ReturnsNewFailureWithoutMutatingOriginalResult()
+    {
+        var original = Result.Success("created");
+        Result<int> failure = Result.Failure<int>(Error.Validation("test.validation", "Invalid test value."));
+
+        var combined = original.WithResult(failure);
+
+        Assert.True(original.IsSuccess);
+        Assert.Empty(original.Errors);
+        Assert.True(combined.HasErrors);
+        Assert.Single(combined.Errors);
+    }
 }

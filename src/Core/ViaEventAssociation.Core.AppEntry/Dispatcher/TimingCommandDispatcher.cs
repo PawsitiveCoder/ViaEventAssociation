@@ -4,7 +4,7 @@ using ViaEventAssociation.Core.Tools.OperationResult;
 
 namespace ViaEventAssociation.Core.AppEntry;
 
-public class TimingCommandDispatcher : ICommandDispatcher
+internal class TimingCommandDispatcher : ICommandDispatcher
 {
     private readonly ICommandDispatcher _next;
     private readonly ILogger<TimingCommandDispatcher> _logger;

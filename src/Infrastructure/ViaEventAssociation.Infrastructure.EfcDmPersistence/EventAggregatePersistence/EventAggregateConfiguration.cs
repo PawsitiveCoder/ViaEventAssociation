@@ -6,7 +6,7 @@ using ViaEventAssociation.Core.Domain.Aggregates.EventAggregate.Values;
 
 namespace ViaEventAssociation.Infrastructure.EfcDmPersistence.EventAggregatePersistence;
 
-public class EventAggregateConfiguration : IEntityTypeConfiguration<EventAggregate>
+internal class EventAggregateConfiguration : IEntityTypeConfiguration<EventAggregate>
 {
     public void Configure(EntityTypeBuilder<EventAggregate> builder)
     {

@@ -20,4 +20,9 @@
     <ProjectReference Include="../../Core/ViaEventAssociation.Core.Domain/ViaEventAssociation.Core.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="IntegrationTests" />
+    <InternalsVisibleTo Include="UnitTests" />
+  </ItemGroup>
+
 </Project>

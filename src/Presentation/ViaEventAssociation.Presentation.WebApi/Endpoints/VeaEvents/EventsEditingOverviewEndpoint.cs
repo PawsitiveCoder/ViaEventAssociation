@@ -43,7 +43,7 @@ public sealed record EventListItemResponse(
     string Title
 );
 
-public class EventsEditingOverviewAnswerToResponseConfig : IMappingConfig<EventsEditingOverviewQuery.Answer, EventsEditingOverviewResponse>
+internal class EventsEditingOverviewAnswerToResponseConfig : IMappingConfig<EventsEditingOverviewQuery.Answer, EventsEditingOverviewResponse>
 {
     public EventsEditingOverviewResponse Map(EventsEditingOverviewQuery.Answer input) =>
         new(

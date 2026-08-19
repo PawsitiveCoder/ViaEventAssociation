@@ -2,7 +2,7 @@ using ViaEventAssociation.Core.Tools.OperationResult;
 
 namespace ViaEventAssociation.Core.AppEntry.Dispatcher;
 
-public class CommandDispatcher : ICommandDispatcher
+internal class CommandDispatcher : ICommandDispatcher
 {
     private readonly IServiceProvider _serviceProvider;
     public CommandDispatcher(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;

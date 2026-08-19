@@ -49,13 +49,13 @@ public sealed record EventOnDayResponse(
     string EventTime
 );
 
-public class EventsCalendarOverviewRequestToQueryConfig : IMappingConfig<EventsCalendarOverviewRequest, EventsCalendarOverviewQuery.Query>
+internal class EventsCalendarOverviewRequestToQueryConfig : IMappingConfig<EventsCalendarOverviewRequest, EventsCalendarOverviewQuery.Query>
 {
     public EventsCalendarOverviewQuery.Query Map(EventsCalendarOverviewRequest input) =>
         new(input.Year, input.Month);
 }
 
-public class EventsCalendarOverviewAnswerToResponseConfig : IMappingConfig<EventsCalendarOverviewQuery.Answer, EventsCalendarOverviewResponse>
+internal class EventsCalendarOverviewAnswerToResponseConfig : IMappingConfig<EventsCalendarOverviewQuery.Answer, EventsCalendarOverviewResponse>
 {
     public EventsCalendarOverviewResponse Map(EventsCalendarOverviewQuery.Answer input) =>
         new(
