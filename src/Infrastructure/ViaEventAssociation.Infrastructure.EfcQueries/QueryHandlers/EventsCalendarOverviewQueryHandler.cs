@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using ViaEventAssociation.Core.Domain.Aggregates.EventAggregate.Values;
 using ViaEventAssociation.Core.Domain.Common.Time;
@@ -29,16 +30,24 @@ public class EventsCalendarOverviewQueryHandler : IQueryHandler<EventsCalendarOv
             .ToListAsync();
 
         var result = events
-            .Select(e => new
+            .Select(e =>
             {
-                e.Id,
-                e.Title,
-                EventDay = DateTime.Parse(e.StartDateTime!).ToString("dd"),
-                EventTime = DateTime.Parse(e.StartDateTime!).ToString("HH:mm")
+                DateTime startDateTime = DateTime.Parse(
+                    e.StartDateTime!,
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.RoundtripKind);
+
+                return new
+                {
+                    e.Id,
+                    e.Title,
+                    EventDay = startDateTime.Day,
+                    EventTime = startDateTime.ToString("HH':'mm", CultureInfo.InvariantCulture)
+                };
             })
             .GroupBy(e => e.EventDay)
             .ToDictionary(
-                group => int.Parse(group.Key),
+                group => group.Key,
                 group => (IReadOnlyCollection<EventsCalendarOverviewQuery.EventOnDay>)group
                     .OrderBy(e => e.EventTime)
                     .Select(e => new EventsCalendarOverviewQuery.EventOnDay(e.Id, e.Title, e.EventTime))

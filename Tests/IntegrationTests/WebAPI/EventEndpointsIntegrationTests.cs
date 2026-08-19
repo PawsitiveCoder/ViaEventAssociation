@@ -106,25 +106,17 @@ public class EventEndpointsIntegrationTests
     }
 
     [Fact]
-    public async Task UpdateEventTitle_WhenEventIdCannotBeParsed_ThrowsOrReturnsInternalServerError()
+    public async Task UpdateEventTitle_WhenEventIdCannotBeParsed_ReturnsBadRequest()
     {
         await using var webAppFactory = new VeaWebApplicationFactory();
         await webAppFactory.ResetDatabaseAsync();
         using HttpClient client = webAppFactory.CreateClient();
 
-        Exception? requestException = await Record.ExceptionAsync(async () =>
-        {
-            HttpResponseMessage response = await client.PatchAsJsonAsync(
-                "/api/events/update-event-title",
-                new { eventId = "not-a-guid", title = "Valid title" });
+        HttpResponseMessage response = await client.PatchAsJsonAsync(
+            "/api/events/update-event-title",
+            new { eventId = "not-a-guid", title = "Valid title" });
 
-            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
-        });
-
-        if (requestException is not null)
-        {
-            Assert.Contains("guid", requestException.ToString(), StringComparison.OrdinalIgnoreCase);
-        }
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
 
     [Fact]

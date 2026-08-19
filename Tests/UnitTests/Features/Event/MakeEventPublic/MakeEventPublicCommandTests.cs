@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using ViaEventAssociation.Core.AppEntry;
+using ViaEventAssociation.Core.Tools.OperationResult;
 
 namespace UnitTests.Features.Event.MakeEventPublic;
 
@@ -24,7 +25,9 @@ public class MakeEventPublicCommandTests
     {
         string invalidId = "not-a-guid";
 
-        Action action = () => MakeEventPublicCommand.Create(invalidId);
-        Assert.Throws<FormatException>(action);
+        var result = MakeEventPublicCommand.Create(invalidId);
+
+        Assert.True(result.HasErrors);
+        Assert.Equal(ErrorType.Validation, result.Error?.ErrorType);
     }
 }
