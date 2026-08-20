@@ -3,7 +3,7 @@ using ViaEventAssociation.Core.Tools.OperationResult;
 
 namespace ViaEventAssociation.Core.AppEntry.Dispatcher;
 
-public class TransactionalCommandDispatcher : ICommandDispatcher
+internal class TransactionalCommandDispatcher : ICommandDispatcher
 {
     private readonly ICommandDispatcher _next;
     private readonly IUnitOfWork _unitOfWork;

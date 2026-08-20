@@ -2,17 +2,13 @@ namespace ViaEventAssociation.Core.Tools.OperationResult;
 
 public class Result<T> : Result
 {
-    public T? Payload { get; private set; }
-    public T Value
-    {
-        get => Payload!;
-        set => Payload = value;
-    }
+    public T? Payload { get; }
+    public T Value => Payload!;
 
     public Result() { }
     public Result(T payload) => Payload = payload;
     public Result(Error error) : base(error) { }
-    public Result(List<Error> errors) : base(errors) { }
+    public Result(IEnumerable<Error> errors) : base(errors) { }
 
     public static implicit operator Result<T>(Error error) => new(error);
 
@@ -21,15 +17,10 @@ public class Result<T> : Result
     public static Result<T> FromResult<T2>(Result<T2> result) =>
         result.HasErrors ? new Result<T>(result.Errors) : new Result<T>();
 
-    public Result<T> WithResult<T2>(Result<T2> result)
-    {
-        if (result.HasErrors)
-        {
-            Errors.AddRange(result.Errors);
-        }
-
-        return this;
-    }
+    public Result<T> WithResult<T2>(Result<T2> result) =>
+        result.HasErrors
+            ? new Result<T>(Errors.Concat(result.Errors))
+            : this;
 
     public Result<T> WithPayloadIfSuccess(Func<T> payloadFactory) =>
         HasErrors ? new Result<T>(Errors) : new Result<T>(payloadFactory());
@@ -37,15 +28,21 @@ public class Result<T> : Result
 
 public class Result
 {
-    public List<Error> Errors { get; }
+    private readonly List<Error> _errors;
+
+    public IReadOnlyList<Error> Errors { get; }
 
     public Error? Error => Errors.Count > 0 ? Errors[0] : null;
 
-    public Result() => Errors = new List<Error>();
+    public Result()
+    {
+        _errors = [];
+        Errors = _errors.AsReadOnly();
+    }
 
-    public Result(Error error) : this() => Errors.Add(error);
+    public Result(Error error) : this() => _errors.Add(error);
 
-    public Result(List<Error> errors) : this() => Errors.AddRange(errors);
+    public Result(IEnumerable<Error> errors) : this() => _errors.AddRange(errors);
 
     public bool IsSuccess => Errors.Count == 0;
 

@@ -2,7 +2,7 @@ using ViaEventAssociation.Core.QueryContracts.Contracts;
 
 namespace ViaEventAssociation.Core.QueryContracts.QueryDispatching;
 
-public class QueryDispatcher : IQueryDispatcher
+internal class QueryDispatcher : IQueryDispatcher
 {
     private readonly IServiceProvider _serviceProvider;
 

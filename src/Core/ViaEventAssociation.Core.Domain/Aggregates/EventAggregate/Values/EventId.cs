@@ -13,7 +13,15 @@ public class EventId : ValueObject
 
     public static Result<EventId> FromGuid(Guid value) => new EventId(value);
 
-    public static Result<EventId> FromString(string value) => new EventId(Guid.Parse(value));
+    public static Result<EventId> FromString(string value)
+    {
+        if (!Guid.TryParse(value, out Guid eventId))
+        {
+            return Error.Validation("EventId.Validation", "Event ID must be a valid GUID.");
+        }
+
+        return new EventId(eventId);
+    }
 
 
     protected override IEnumerable<object> GetEqualityComponents()

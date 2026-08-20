@@ -13,7 +13,7 @@ public class MakeEventPrivateCommand
     {
         var eventIdResult = EventId.FromString(id);
 
-        if (eventIdResult.HasErrors) return Result.Failure<MakeEventPrivateCommand>(eventIdResult.Error);
+        if (eventIdResult.HasErrors) return Result.Failure<MakeEventPrivateCommand>(eventIdResult.Error!);
 
         return new MakeEventPrivateCommand(eventIdResult.Value);
     }

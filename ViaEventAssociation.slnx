@@ -23,6 +23,7 @@
     <Project Path="src/Core/ViaEventAssociation.Core.QueryContracts/ViaEventAssociation.Core.QueryContracts.csproj" />
   </Folder>
   <Folder Name="/src/Core/Tools/">
+    <Project Path="src/Core/Tools/ViaEventAssociation.Core.Tools.ObjectMapper/ViaEventAssociation.Core.Tools.ObjectMapper.csproj" />
     <Project Path="src/Core/Tools/ViaEventAssociation.Core.Tools.OperationResult/ViaEventAssociation.Core.Tools.OperationResult.csproj" />
     <Project Path="src/Core/Tools/ViaEventAssociation.Core.Tools.Option/ViaEventAssociation.Core.Tools.Option.csproj" />
   </Folder>
@@ -30,6 +31,9 @@
     <Project Path="src/Infrastructure/ViaEventAssociation.Infrastructure.EfcDmPersistence/ViaEventAssociation.Infrastructure.EfcDmPersistence.csproj" />
     <Project Path="src/Infrastructure/ViaEventAssociation.Infrastructure.EfcQueries/ViaEventAssociation.Infrastructure.EfcQueries.csproj" />
     <Project Path="src/Infrastructure/ViaEventAssociation.Infrastructure.Time/ViaEventAssociation.Infrastructure.Time.csproj" />
+  </Folder>
+  <Folder Name="/src/Presentation/">
+    <Project Path="src/Presentation/ViaEventAssociation.Presentation.WebApi/ViaEventAssociation.Presentation.WebApi.csproj" />
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="Tests/IntegrationTests/IntegrationTests.csproj" />

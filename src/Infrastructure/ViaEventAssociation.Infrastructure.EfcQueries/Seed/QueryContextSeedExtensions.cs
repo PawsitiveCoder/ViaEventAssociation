@@ -3,9 +3,9 @@ using ViaEventAssociation.Infrastructure.EfcQueries.Seed.Factories;
 
 namespace ViaEventAssociation.Infrastructure.EfcQueries.Seed;
 
-public static class QueryContextSeedExtensions
+internal static class QueryContextSeedExtensions
 {
-    public static QueryContext Seed(this QueryContext context)
+    internal static QueryContext Seed(this QueryContext context)
     {
         var eventAggregates = EventAggregateSeedFactory.CreateEventAggregates();
         context.EventAggregates.AddRange(eventAggregates);

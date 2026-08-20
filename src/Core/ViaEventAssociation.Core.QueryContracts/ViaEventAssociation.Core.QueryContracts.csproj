@@ -10,4 +10,8 @@
     <ProjectReference Include="../Tools/ViaEventAssociation.Core.Tools.OperationResult/ViaEventAssociation.Core.Tools.OperationResult.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="ViaEventAssociation.Infrastructure.EfcQueries" />
+  </ItemGroup>
+
 </Project>

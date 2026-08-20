@@ -13,7 +13,7 @@ public class MakeEventPublicCommand
     {
         var eventIdResult = EventId.FromString(id);
 
-        if (eventIdResult.HasErrors) return Result.Failure<MakeEventPublicCommand>(eventIdResult.Error);
+        if (eventIdResult.HasErrors) return Result.Failure<MakeEventPublicCommand>(eventIdResult.Error!);
 
         return new MakeEventPublicCommand(eventIdResult.Value);
     }

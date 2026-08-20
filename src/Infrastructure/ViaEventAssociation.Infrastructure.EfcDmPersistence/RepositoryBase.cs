@@ -5,11 +5,11 @@ using ViaEventAssociation.Core.Tools.Option;
 
 namespace ViaEventAssociation.Infrastructure.EfcDmPersistence;
 
-public abstract class RepositoryBase<T, TId> : IGenericRepository<T, TId>
+internal abstract class RepositoryBase<T, TId> : IGenericRepository<T, TId>
     where T : AggregateRoot<TId>
     where TId : ValueObject
 {
-    private readonly DmContext _dmContext;
+    protected readonly DmContext _dmContext;
 
     public RepositoryBase(DmContext dmContext) => _dmContext = dmContext;
 

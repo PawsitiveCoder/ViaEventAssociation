@@ -2,7 +2,7 @@
 
 namespace ViaEventAssociation.Infrastructure.Time;
 
-public class SystemTime : ISystemTime
+internal class SystemTime : ISystemTime
 {
     public DateTime CurrentTime() => DateTime.UtcNow;
 }

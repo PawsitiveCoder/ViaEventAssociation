@@ -11,7 +11,7 @@ public class MockCommandDispatcher : ICommandDispatcher
 
     public MockCommandDispatcher(Result? resultToReturn = null) => _resultToReturn = resultToReturn ?? new Result();
 
-    public async Task<Result> DispatchAsync<TCommand>(TCommand command)
+    public virtual async Task<Result> DispatchAsync<TCommand>(TCommand command)
     {
         InvokeCount++;
         return _resultToReturn;

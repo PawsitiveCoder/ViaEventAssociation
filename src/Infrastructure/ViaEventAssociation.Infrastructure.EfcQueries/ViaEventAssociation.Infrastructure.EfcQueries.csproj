@@ -21,4 +21,8 @@
     <ProjectReference Include="../../Core/ViaEventAssociation.Core.QueryContracts/ViaEventAssociation.Core.QueryContracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="IntegrationTests" />
+  </ItemGroup>
+
 </Project>

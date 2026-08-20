@@ -6,7 +6,7 @@ using ViaEventAssociation.Core.Application;
 
 namespace UnitTests.Common.Services;
 
-[TestSubject(typeof(DependencyInjection))]
+[TestSubject(typeof(CommandHandlersServiceExtensions))]
 public class DependencyInjectionUnitTests
 {
     [Theory]

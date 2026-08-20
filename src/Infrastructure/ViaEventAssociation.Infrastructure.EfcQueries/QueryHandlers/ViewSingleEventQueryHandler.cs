@@ -4,7 +4,7 @@ using ViaEventAssociation.Core.QueryContracts.Queries;
 
 namespace ViaEventAssociation.Infrastructure.EfcQueries.QueryHandlers;
 
-public class ViewSingleEventQueryHandler : IQueryHandler<ViewSingleEventQuery.Query, ViewSingleEventQuery.Answer?>
+internal class ViewSingleEventQueryHandler : IQueryHandler<ViewSingleEventQuery.Query, ViewSingleEventQuery.Answer?>
 {
     private readonly QueryContext _context;
 

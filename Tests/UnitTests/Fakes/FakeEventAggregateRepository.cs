@@ -6,7 +6,7 @@ using ViaEventAssociation.Infrastructure.EfcDmPersistence;
 
 namespace UnitTests.Fakes;
 
-public class FakeEventAggregateRepository : RepositoryBase<EventAggregate, EventId>, IEventAggregateRepository
+internal class FakeEventAggregateRepository : RepositoryBase<EventAggregate, EventId>, IEventAggregateRepository
 {
     public List<EventAggregate> Events { get; private set; } = [];
 
